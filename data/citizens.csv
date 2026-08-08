@@ -1,0 +1,501 @@
+citizen_id,age,gender,annual_income,occupation,land_area,family_size,education_level,disability_status,marital_status,employment_status,village,existing_scheme_count,bank_account,ration_card,aadhaar_verified,housing_condition,health_condition,farmer_status,senior_citizen,previous_benefit_received
+CIT10001,69,Male,57295,Agricultural Laborer,0.0,3,Secondary,False,Widowed,Seasonal,Kovilpatti,4,True,NPHH,True,Semi-Pucca,Good,False,True,True
+CIT10002,32,Male,39460,Unemployed,0.0,3,Secondary,False,Single,Employed,Melur,1,True,NPHH,True,Pucca,Good,False,False,False
+CIT10003,78,Female,23353,Unemployed,2.01,3,Higher Secondary,False,Married,Self-Employed,Melur,0,True,AAY,True,Pucca,Good,True,True,False
+CIT10004,38,Female,12380,Agricultural Laborer,0.2,7,Graduate,False,Married,Employed,Perur,1,False,NPHH,True,Pucca,Good,True,False,True
+CIT10005,41,Male,210583,Farmer,0.0,2,Primary,False,Married,Unemployed,Keeranur,2,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10006,20,Female,32560,Farmer,0.0,6,Illiterate,False,Married,Unemployed,Vadapalani,1,True,None,True,Kutcha,Good,False,False,True
+CIT10007,39,Male,190180,Student,0.0,5,Primary,False,Married,Employed,Sundarpuram,0,True,AAY,True,Kutcha,Chronic Illness,False,False,True
+CIT10008,70,Male,201319,Unemployed,2.44,2,Higher Secondary,True,Married,Unemployed,Keeranur,2,True,NPHH,True,Semi-Pucca,Good,True,True,False
+CIT10009,19,Male,19819,Farmer,0.28,8,Graduate,False,Single,Employed,Chinnamanur,0,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10010,47,Male,82223,Agricultural Laborer,0.0,3,Secondary,False,Single,Employed,Vadapalani,1,True,PHH,True,Kutcha,Good,False,False,True
+CIT10011,55,Other,42636,Farmer,0.0,2,Primary,False,Married,Self-Employed,Kovilpatti,0,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10012,19,Female,18870,Student,0.0,5,Primary,False,Married,Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10013,81,Male,104193,Farmer,0.0,4,Primary,False,Married,Seasonal,Keeranur,1,True,PHH,False,Pucca,Good,False,True,False
+CIT10014,77,Female,12000,Farmer,0.0,4,Primary,False,Married,Self-Employed,Melur,0,False,NPHH,True,Pucca,Good,False,True,False
+CIT10015,38,Female,55930,Farmer,0.0,2,Secondary,False,Married,Unemployed,Perur,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10016,50,Female,125256,Small Business Owner,0.2,4,Illiterate,False,Widowed,Employed,Vadapalani,1,True,PHH,True,Pucca,Good,True,False,True
+CIT10017,75,Male,47289,Agricultural Laborer,0.7,5,Primary,False,Married,Unemployed,Perur,2,True,PHH,True,Semi-Pucca,Good,True,True,True
+CIT10018,39,Male,33459,Farmer,0.0,3,Secondary,False,Married,Self-Employed,Chinnamanur,2,True,PHH,True,Pucca,Good,False,False,True
+CIT10019,66,Male,13885,Private Service,0.0,3,Illiterate,False,Married,Employed,Vadapalani,1,True,NPHH,True,Semi-Pucca,Good,False,True,False
+CIT10020,76,Male,119517,Farmer,0.03,1,Illiterate,False,Married,Self-Employed,Keeranur,2,True,PHH,True,Pucca,Good,False,True,False
+CIT10021,59,Male,31348,Agricultural Laborer,0.0,2,Primary,False,Single,Employed,Kovilpatti,0,True,PHH,True,Pucca,Good,False,False,False
+CIT10022,77,Female,189924,Private Service,0.0,6,Higher Secondary,False,Single,Self-Employed,Sundarpuram,0,True,NPHH,True,Pucca,Good,False,True,False
+CIT10023,32,Male,89829,Agricultural Laborer,3.91,3,Higher Secondary,True,Married,Employed,Perur,0,True,None,True,Kutcha,Good,True,False,False
+CIT10024,79,Male,38898,Small Business Owner,1.07,8,Illiterate,False,Married,Seasonal,Perur,1,True,NPHH,True,Kutcha,Chronic Illness,True,True,False
+CIT10025,79,Male,64794,Farmer,1.61,3,Secondary,False,Single,Unemployed,Sundarpuram,0,False,PHH,True,Kutcha,Good,True,True,False
+CIT10026,64,Male,226157,Unemployed,0.0,4,Primary,False,Married,Employed,Perur,0,True,PHH,True,Kutcha,Good,False,True,True
+CIT10027,79,Male,148266,Agricultural Laborer,4.96,3,Secondary,False,Married,Employed,Perur,1,True,AAY,True,Kutcha,Good,True,True,True
+CIT10028,68,Male,33170,Unemployed,0.0,3,Secondary,False,Married,Unemployed,Vadapalani,2,True,PHH,False,Kutcha,Good,False,True,False
+CIT10029,72,Male,45999,Farmer,0.0,2,Higher Secondary,False,Single,Seasonal,Vadapalani,1,False,NPHH,True,Kutcha,Good,False,True,False
+CIT10030,81,Male,42694,Agricultural Laborer,2.62,3,Secondary,False,Single,Employed,Sundarpuram,0,True,PHH,True,Semi-Pucca,Minor Ailment,True,True,False
+CIT10031,20,Male,66088,Unemployed,4.95,4,Graduate,True,Married,Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Chronic Illness,True,False,False
+CIT10032,68,Female,129454,Retired,0.0,8,Graduate,False,Married,Unemployed,Kovilpatti,1,True,AAY,True,Kutcha,Good,False,True,True
+CIT10033,24,Male,311195,Farmer,0.0,4,Higher Secondary,True,Widowed,Unemployed,Keeranur,1,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10034,38,Male,76381,Unemployed,0.05,2,Secondary,False,Married,Unemployed,Keeranur,0,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10035,56,Male,57960,Farmer,4.69,1,Primary,False,Single,Self-Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10036,35,Female,86933,Small Business Owner,0.51,2,Primary,True,Single,Employed,Perur,2,False,PHH,True,Pucca,Chronic Illness,False,False,False
+CIT10037,21,Male,110379,Farmer,0.47,4,Illiterate,False,Married,Seasonal,Kovilpatti,0,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10038,77,Female,58808,Small Business Owner,1.81,5,Primary,False,Single,Unemployed,Sundarpuram,4,True,NPHH,True,Kutcha,Good,True,True,True
+CIT10039,31,Female,41787,Agricultural Laborer,0.2,6,Secondary,False,Married,Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10040,26,Male,53795,Farmer,0.42,1,Secondary,False,Married,Self-Employed,Sundarpuram,0,True,PHH,True,Kutcha,Good,False,False,False
+CIT10041,70,Female,21670,Farmer,0.0,4,Graduate,False,Single,Self-Employed,Vadapalani,1,False,PHH,True,Semi-Pucca,Chronic Illness,False,True,True
+CIT10042,19,Female,12000,Farmer,0.57,4,Illiterate,False,Married,Employed,Perur,0,True,None,True,Kutcha,Good,False,False,True
+CIT10043,77,Male,89335,Private Service,0.0,4,Illiterate,False,Married,Self-Employed,Melur,0,True,NPHH,True,Kutcha,Good,False,True,False
+CIT10044,61,Male,128921,Retired,1.02,4,Higher Secondary,False,Married,Employed,Sundarpuram,1,True,AAY,True,Kutcha,Good,True,True,True
+CIT10045,25,Female,12000,Unemployed,4.24,4,Primary,False,Single,Unemployed,Chinnamanur,2,True,PHH,True,Kutcha,Chronic Illness,True,False,False
+CIT10046,64,Male,20246,Farmer,0.0,4,Illiterate,False,Married,Seasonal,Perur,3,True,None,True,Semi-Pucca,Chronic Illness,False,True,False
+CIT10047,52,Other,12000,Agricultural Laborer,0.39,2,Graduate,False,Married,Employed,Kovilpatti,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10048,53,Male,103063,Student,0.0,5,Higher Secondary,False,Married,Employed,Chinnamanur,0,True,PHH,True,Kutcha,Good,False,False,False
+CIT10049,67,Female,22091,Retired,0.61,2,Primary,False,Married,Self-Employed,Vadapalani,1,True,AAY,True,Kutcha,Good,False,True,False
+CIT10050,21,Male,12000,Agricultural Laborer,0.0,4,Higher Secondary,False,Married,Seasonal,Keeranur,1,True,PHH,True,Kutcha,Good,False,False,False
+CIT10051,19,Female,43485,Unemployed,0.2,3,Secondary,False,Married,Unemployed,Kovilpatti,2,True,PHH,True,Kutcha,Good,True,False,True
+CIT10052,23,Female,12000,Retired,0.0,4,Higher Secondary,False,Widowed,Unemployed,Sundarpuram,2,True,PHH,True,Pucca,Good,False,False,True
+CIT10053,71,Male,114045,Artisan,1.8,6,Higher Secondary,False,Married,Unemployed,Sundarpuram,2,True,PHH,True,Kutcha,Good,True,True,False
+CIT10054,21,Male,107020,Farmer,2.32,6,Illiterate,False,Married,Seasonal,Kovilpatti,1,True,NPHH,True,Semi-Pucca,Good,True,False,False
+CIT10055,71,Male,132042,Farmer,1.37,5,Secondary,False,Single,Seasonal,Sundarpuram,1,True,NPHH,True,Pucca,Minor Ailment,True,True,True
+CIT10056,80,Male,18704,Agricultural Laborer,0.0,4,Illiterate,False,Single,Employed,Chinnamanur,0,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10057,35,Male,121590,Agricultural Laborer,0.0,4,Illiterate,False,Widowed,Unemployed,Perur,4,True,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10058,61,Female,52944,Farmer,1.45,4,Graduate,False,Married,Unemployed,Sundarpuram,0,True,NPHH,True,Pucca,Good,True,True,False
+CIT10059,51,Female,25877,Farmer,3.29,5,Secondary,False,Married,Self-Employed,Vadapalani,0,True,PHH,True,Pucca,Good,True,False,True
+CIT10060,79,Female,131167,Unemployed,3.83,3,Secondary,False,Married,Self-Employed,Perur,0,True,PHH,True,Semi-Pucca,Good,True,True,False
+CIT10061,31,Female,28519,Agricultural Laborer,0.35,7,Higher Secondary,False,Married,Self-Employed,Chinnamanur,2,True,None,True,Pucca,Disabled,False,False,True
+CIT10062,65,Female,14473,Farmer,4.98,6,Graduate,False,Widowed,Seasonal,Melur,1,True,PHH,True,Pucca,Good,True,True,False
+CIT10063,32,Female,110829,Small Business Owner,0.0,4,Higher Secondary,False,Married,Employed,Sundarpuram,1,True,NPHH,True,Kutcha,Minor Ailment,False,False,False
+CIT10064,79,Female,137364,Student,0.0,3,Secondary,True,Widowed,Employed,Sundarpuram,3,True,PHH,True,Pucca,Good,False,True,False
+CIT10065,57,Male,21916,Unemployed,0.0,2,Primary,False,Single,Unemployed,Vadapalani,3,False,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10066,70,Male,116551,Farmer,0.0,5,Illiterate,False,Single,Employed,Chinnamanur,0,True,NPHH,True,Semi-Pucca,Good,False,True,False
+CIT10067,41,Male,99890,Student,0.0,2,Primary,False,Married,Employed,Vadapalani,0,True,PHH,True,Pucca,Good,False,False,True
+CIT10068,43,Male,35978,Small Business Owner,2.33,5,Primary,False,Single,Employed,Keeranur,2,True,PHH,True,Pucca,Good,True,False,True
+CIT10069,77,Male,45634,Farmer,1.5,4,Secondary,False,Married,Self-Employed,Chinnamanur,3,True,NPHH,True,Kutcha,Chronic Illness,True,True,False
+CIT10070,58,Male,17946,Unemployed,0.5,3,Secondary,False,Married,Seasonal,Kovilpatti,1,True,PHH,True,Kutcha,Chronic Illness,True,False,False
+CIT10071,46,Female,12000,Agricultural Laborer,0.0,6,Graduate,False,Married,Unemployed,Kovilpatti,1,True,PHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10072,32,Female,43499,Farmer,0.0,4,Secondary,False,Single,Unemployed,Kovilpatti,0,True,NPHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10073,62,Male,73884,Agricultural Laborer,1.11,4,Secondary,False,Married,Employed,Vadapalani,2,True,PHH,True,Semi-Pucca,Chronic Illness,True,True,False
+CIT10074,82,Male,238374,Farmer,0.0,4,Primary,False,Married,Self-Employed,Kovilpatti,1,True,AAY,True,Pucca,Good,False,True,False
+CIT10075,26,Male,62105,Farmer,0.0,3,Illiterate,True,Married,Self-Employed,Chinnamanur,1,True,PHH,False,Pucca,Good,False,False,True
+CIT10076,18,Female,35316,Unemployed,2.2,5,Primary,False,Married,Unemployed,Kovilpatti,0,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10077,25,Male,101464,Farmer,0.17,3,Higher Secondary,False,Married,Employed,Melur,3,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10078,80,Female,112583,Retired,2.39,6,Primary,False,Married,Employed,Kovilpatti,1,True,PHH,True,Semi-Pucca,Chronic Illness,True,True,False
+CIT10079,28,Male,14055,Small Business Owner,0.82,6,Secondary,False,Married,Employed,Sundarpuram,0,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10080,25,Female,118211,Farmer,0.65,3,Secondary,False,Single,Unemployed,Keeranur,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10081,52,Female,108865,Farmer,0.0,4,Illiterate,True,Married,Self-Employed,Vadapalani,1,True,PHH,True,Semi-Pucca,Disabled,False,False,False
+CIT10082,52,Male,19673,Small Business Owner,0.98,4,Primary,False,Married,Seasonal,Perur,1,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10083,50,Female,14173,Small Business Owner,0.0,3,Secondary,True,Married,Unemployed,Keeranur,2,True,PHH,True,Kutcha,Good,False,False,False
+CIT10084,22,Female,92877,Farmer,0.0,8,Primary,False,Divorced,Self-Employed,Melur,1,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10085,58,Male,20042,Farmer,0.2,1,Higher Secondary,False,Married,Seasonal,Vadapalani,3,True,PHH,True,Semi-Pucca,Disabled,True,False,False
+CIT10086,45,Male,68973,Unemployed,2.56,3,Secondary,False,Married,Employed,Chinnamanur,0,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10087,24,Female,132409,Farmer,0.0,4,Secondary,False,Married,Employed,Vadapalani,0,True,NPHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10088,29,Female,114572,Artisan,0.0,4,Higher Secondary,False,Married,Seasonal,Sundarpuram,0,True,PHH,True,Kutcha,Minor Ailment,False,False,True
+CIT10089,51,Female,29523,Student,0.08,4,Secondary,False,Married,Employed,Chinnamanur,1,True,NPHH,True,Semi-Pucca,Minor Ailment,False,False,False
+CIT10090,50,Female,166156,Agricultural Laborer,0.0,5,Graduate,False,Married,Seasonal,Keeranur,1,True,AAY,True,Kutcha,Disabled,False,False,False
+CIT10091,65,Female,53606,Farmer,3.49,4,Primary,False,Married,Seasonal,Keeranur,2,True,NPHH,True,Pucca,Good,True,True,False
+CIT10092,40,Other,138912,Farmer,0.0,4,Secondary,False,Widowed,Self-Employed,Kovilpatti,2,True,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10093,79,Female,12000,Unemployed,0.0,2,Primary,False,Married,Self-Employed,Chinnamanur,1,False,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10094,54,Female,96831,Farmer,0.1,3,Primary,False,Single,Self-Employed,Sundarpuram,4,True,AAY,True,Semi-Pucca,Good,False,False,False
+CIT10095,61,Female,93678,Farmer,1.27,3,Illiterate,False,Married,Self-Employed,Kovilpatti,0,True,PHH,True,Kutcha,Good,True,True,False
+CIT10096,52,Male,182787,Small Business Owner,0.0,3,Secondary,True,Married,Employed,Kovilpatti,2,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10097,82,Female,82935,Farmer,0.0,4,Primary,False,Widowed,Employed,Vadapalani,1,True,NPHH,True,Pucca,Good,False,True,True
+CIT10098,64,Female,58051,Agricultural Laborer,0.0,2,Primary,False,Married,Employed,Keeranur,1,True,PHH,True,Pucca,Good,False,True,False
+CIT10099,20,Male,39632,Unemployed,0.0,3,Graduate,False,Married,Self-Employed,Kovilpatti,2,True,PHH,True,Pucca,Good,False,False,False
+CIT10100,18,Female,12521,Agricultural Laborer,0.0,3,Higher Secondary,False,Married,Employed,Melur,1,True,NPHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10101,22,Male,12000,Private Service,0.0,6,Secondary,False,Married,Employed,Melur,0,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10102,31,Female,16335,Unemployed,0.0,6,Higher Secondary,True,Widowed,Employed,Keeranur,1,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10103,44,Female,51902,Farmer,0.0,4,Graduate,True,Married,Self-Employed,Melur,1,True,AAY,True,Semi-Pucca,Good,False,False,False
+CIT10104,26,Female,60060,Agricultural Laborer,2.11,6,Secondary,False,Married,Seasonal,Vadapalani,2,True,PHH,False,Kutcha,Good,True,False,False
+CIT10105,32,Male,65051,Agricultural Laborer,0.38,5,Primary,False,Divorced,Seasonal,Sundarpuram,1,True,PHH,True,Kutcha,Minor Ailment,False,False,True
+CIT10106,59,Female,54340,Small Business Owner,0.0,4,Higher Secondary,False,Widowed,Unemployed,Perur,3,True,NPHH,True,Pucca,Good,False,False,False
+CIT10107,68,Female,58345,Farmer,0.77,1,Secondary,True,Married,Seasonal,Kovilpatti,1,True,PHH,True,Kutcha,Good,True,True,True
+CIT10108,80,Male,19329,Retired,0.0,5,Primary,False,Married,Self-Employed,Perur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10109,69,Male,35669,Small Business Owner,0.26,4,Secondary,False,Married,Unemployed,Sundarpuram,2,True,PHH,True,Pucca,Good,True,True,False
+CIT10110,21,Female,90463,Agricultural Laborer,1.59,4,Primary,False,Married,Unemployed,Sundarpuram,1,True,PHH,True,Pucca,Good,True,False,True
+CIT10111,40,Male,171203,Small Business Owner,0.0,5,Graduate,True,Married,Employed,Vadapalani,3,True,PHH,True,Kutcha,Good,False,False,True
+CIT10112,32,Male,36877,Agricultural Laborer,0.0,4,Primary,False,Married,Seasonal,Melur,1,True,NPHH,True,Pucca,Good,False,False,True
+CIT10113,60,Female,20438,Unemployed,0.17,4,Graduate,False,Married,Employed,Melur,1,True,PHH,True,Pucca,Disabled,False,True,True
+CIT10114,46,Male,79293,Small Business Owner,4.48,6,Graduate,False,Married,Unemployed,Sundarpuram,0,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10115,53,Female,18843,Farmer,0.3,3,Secondary,True,Married,Self-Employed,Vadapalani,1,True,PHH,True,Kutcha,Good,False,False,True
+CIT10116,30,Male,52366,Farmer,0.2,4,Secondary,False,Single,Employed,Vadapalani,0,True,PHH,True,Kutcha,Good,True,False,False
+CIT10117,49,Female,70395,Artisan,1.29,4,Primary,False,Single,Employed,Keeranur,2,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10118,76,Male,15340,Small Business Owner,0.92,4,Illiterate,False,Married,Self-Employed,Chinnamanur,0,True,PHH,True,Kutcha,Good,True,True,False
+CIT10119,45,Female,33753,Retired,0.0,5,Illiterate,False,Single,Employed,Kovilpatti,0,True,PHH,True,Pucca,Good,False,False,True
+CIT10120,83,Male,45215,Farmer,0.0,1,Higher Secondary,False,Single,Self-Employed,Chinnamanur,0,False,PHH,True,Pucca,Chronic Illness,False,True,True
+CIT10121,59,Female,12000,Farmer,2.25,4,Secondary,False,Married,Unemployed,Melur,0,True,PHH,True,Pucca,Good,True,False,True
+CIT10122,62,Male,116763,Farmer,1.34,3,Illiterate,True,Single,Self-Employed,Sundarpuram,0,True,NPHH,True,Pucca,Chronic Illness,True,True,False
+CIT10123,79,Female,78406,Small Business Owner,1.05,4,Primary,False,Single,Self-Employed,Keeranur,2,True,AAY,True,Pucca,Good,True,True,False
+CIT10124,74,Female,47639,Agricultural Laborer,0.98,4,Graduate,True,Married,Unemployed,Perur,2,True,PHH,True,Kutcha,Minor Ailment,False,True,False
+CIT10125,23,Female,136084,Farmer,0.0,5,Primary,False,Married,Unemployed,Melur,2,True,PHH,True,Kutcha,Good,False,False,True
+CIT10126,45,Female,12000,Small Business Owner,0.4,2,Graduate,False,Married,Self-Employed,Kovilpatti,2,True,PHH,True,Semi-Pucca,Chronic Illness,False,False,False
+CIT10127,45,Male,12000,Agricultural Laborer,0.09,4,Primary,False,Single,Self-Employed,Vadapalani,0,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10128,61,Female,17622,Farmer,0.04,3,Secondary,False,Married,Self-Employed,Sundarpuram,2,True,PHH,True,Semi-Pucca,Disabled,False,True,True
+CIT10129,47,Male,83884,Agricultural Laborer,1.05,5,Illiterate,False,Widowed,Seasonal,Melur,0,True,PHH,False,Semi-Pucca,Chronic Illness,True,False,False
+CIT10130,79,Male,49786,Student,0.72,6,Secondary,False,Married,Employed,Perur,0,True,NPHH,True,Pucca,Good,True,True,True
+CIT10131,79,Male,43123,Farmer,0.0,8,Secondary,False,Married,Unemployed,Kovilpatti,1,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10132,18,Female,35717,Farmer,0.0,5,Primary,False,Widowed,Seasonal,Kovilpatti,0,True,NPHH,True,Pucca,Chronic Illness,False,False,True
+CIT10133,44,Female,228527,Farmer,0.0,5,Secondary,False,Married,Employed,Keeranur,2,True,PHH,True,Kutcha,Good,False,False,False
+CIT10134,79,Male,67077,Student,0.2,3,Secondary,False,Single,Employed,Melur,1,True,NPHH,True,Semi-Pucca,Good,True,True,False
+CIT10135,20,Female,34223,Unemployed,6.94,3,Secondary,False,Married,Unemployed,Perur,2,True,PHH,True,Kutcha,Chronic Illness,True,False,False
+CIT10136,44,Male,136770,Agricultural Laborer,0.0,4,Higher Secondary,False,Widowed,Employed,Kovilpatti,1,True,AAY,True,Pucca,Good,False,False,True
+CIT10137,26,Male,72019,Farmer,3.89,5,Primary,False,Married,Employed,Sundarpuram,0,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10138,79,Male,28125,Artisan,1.55,6,Secondary,False,Single,Seasonal,Kovilpatti,2,True,PHH,True,Semi-Pucca,Good,True,True,False
+CIT10139,54,Male,59092,Retired,3.3,2,Graduate,False,Married,Unemployed,Perur,0,True,PHH,True,Kutcha,Chronic Illness,True,False,True
+CIT10140,68,Male,70037,Student,0.72,6,Higher Secondary,True,Married,Employed,Vadapalani,1,True,PHH,False,Kutcha,Good,True,True,False
+CIT10141,61,Female,59563,Retired,2.03,4,Graduate,False,Single,Seasonal,Vadapalani,0,True,AAY,True,Semi-Pucca,Good,True,True,False
+CIT10142,41,Female,90089,Student,0.0,4,Primary,False,Married,Seasonal,Keeranur,1,True,AAY,True,Semi-Pucca,Good,False,False,True
+CIT10143,76,Male,12000,Student,0.0,2,Higher Secondary,False,Single,Unemployed,Melur,1,True,PHH,True,Kutcha,Chronic Illness,False,True,False
+CIT10144,49,Male,28742,Agricultural Laborer,2.12,2,Secondary,False,Married,Employed,Perur,1,True,AAY,True,Kutcha,Good,True,False,False
+CIT10145,69,Male,94317,Agricultural Laborer,0.06,4,Illiterate,False,Married,Self-Employed,Keeranur,3,True,PHH,False,Semi-Pucca,Good,False,True,True
+CIT10146,79,Female,21028,Farmer,0.0,4,Higher Secondary,True,Married,Self-Employed,Chinnamanur,2,True,PHH,True,Semi-Pucca,Good,False,True,True
+CIT10147,75,Male,72818,Unemployed,0.15,3,Secondary,False,Married,Self-Employed,Kovilpatti,2,True,AAY,True,Kutcha,Chronic Illness,False,True,False
+CIT10148,69,Female,90431,Private Service,0.0,4,Illiterate,False,Married,Seasonal,Chinnamanur,2,True,NPHH,True,Semi-Pucca,Minor Ailment,False,True,True
+CIT10149,29,Other,12000,Small Business Owner,0.0,5,Illiterate,False,Married,Self-Employed,Kovilpatti,0,True,PHH,True,Kutcha,Good,False,False,False
+CIT10150,56,Female,12000,Farmer,1.02,5,Higher Secondary,False,Married,Employed,Vadapalani,1,True,NPHH,True,Semi-Pucca,Good,True,False,True
+CIT10151,19,Female,64707,Farmer,1.52,6,Illiterate,False,Married,Self-Employed,Keeranur,0,True,None,True,Kutcha,Chronic Illness,True,False,False
+CIT10152,20,Male,37434,Farmer,3.66,3,Illiterate,False,Married,Employed,Vadapalani,0,True,NPHH,True,Semi-Pucca,Good,True,False,True
+CIT10153,73,Female,169144,Farmer,0.0,3,Primary,False,Single,Self-Employed,Sundarpuram,4,True,AAY,False,Kutcha,Good,False,True,False
+CIT10154,76,Female,57086,Small Business Owner,3.64,4,Illiterate,False,Married,Self-Employed,Chinnamanur,1,True,NPHH,False,Pucca,Chronic Illness,True,True,False
+CIT10155,19,Female,29566,Private Service,5.86,3,Graduate,False,Married,Employed,Chinnamanur,1,True,PHH,True,Kutcha,Minor Ailment,True,False,True
+CIT10156,19,Male,67448,Farmer,1.07,2,Secondary,False,Married,Unemployed,Vadapalani,0,False,AAY,True,Kutcha,Good,True,False,True
+CIT10157,71,Male,64557,Farmer,0.0,3,Secondary,False,Widowed,Employed,Sundarpuram,1,True,PHH,True,Kutcha,Good,False,True,False
+CIT10158,18,Male,34832,Small Business Owner,0.0,3,Graduate,False,Divorced,Employed,Kovilpatti,0,True,AAY,True,Pucca,Good,False,False,False
+CIT10159,36,Female,12000,Farmer,1.56,3,Secondary,False,Married,Self-Employed,Keeranur,0,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10160,19,Female,55268,Artisan,0.0,3,Primary,False,Married,Employed,Sundarpuram,0,True,NPHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10161,70,Female,47465,Farmer,0.0,3,Higher Secondary,False,Married,Self-Employed,Keeranur,1,True,PHH,True,Pucca,Chronic Illness,False,True,True
+CIT10162,61,Male,28157,Farmer,5.04,1,Primary,False,Married,Employed,Chinnamanur,1,True,PHH,True,Pucca,Disabled,True,True,True
+CIT10163,49,Female,12000,Farmer,0.0,4,Primary,False,Married,Self-Employed,Keeranur,0,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10164,49,Male,26871,Farmer,7.07,4,Secondary,False,Widowed,Self-Employed,Chinnamanur,2,True,None,True,Kutcha,Good,True,False,False
+CIT10165,72,Male,26492,Small Business Owner,0.19,4,Higher Secondary,False,Married,Self-Employed,Sundarpuram,0,True,None,False,Pucca,Good,False,True,True
+CIT10166,73,Male,76829,Farmer,2.11,2,Higher Secondary,False,Divorced,Unemployed,Chinnamanur,1,True,PHH,True,Kutcha,Good,True,True,False
+CIT10167,34,Female,47191,Agricultural Laborer,0.26,3,Graduate,False,Married,Seasonal,Melur,4,True,None,True,Semi-Pucca,Chronic Illness,True,False,True
+CIT10168,55,Male,113001,Agricultural Laborer,0.1,4,Higher Secondary,False,Married,Employed,Chinnamanur,1,True,AAY,True,Semi-Pucca,Good,False,False,False
+CIT10169,41,Female,78913,Farmer,1.46,4,Higher Secondary,False,Married,Employed,Vadapalani,2,False,NPHH,True,Pucca,Good,False,False,True
+CIT10170,28,Female,26069,Farmer,0.0,4,Higher Secondary,False,Single,Unemployed,Sundarpuram,3,False,PHH,False,Semi-Pucca,Good,False,False,True
+CIT10171,33,Male,38171,Agricultural Laborer,3.03,3,Illiterate,False,Married,Employed,Kovilpatti,1,True,AAY,True,Semi-Pucca,Minor Ailment,True,False,False
+CIT10172,76,Female,219440,Student,0.0,6,Primary,True,Married,Seasonal,Keeranur,2,True,NPHH,True,Pucca,Chronic Illness,False,True,True
+CIT10173,20,Male,28128,Private Service,0.21,3,Secondary,False,Single,Employed,Perur,2,True,AAY,True,Kutcha,Chronic Illness,True,False,False
+CIT10174,37,Male,59178,Farmer,0.0,4,Secondary,False,Married,Self-Employed,Sundarpuram,1,True,AAY,True,Kutcha,Good,False,False,False
+CIT10175,76,Male,13491,Farmer,0.03,4,Illiterate,False,Married,Self-Employed,Vadapalani,0,True,AAY,True,Semi-Pucca,Good,False,True,True
+CIT10176,53,Male,116731,Farmer,0.0,4,Primary,False,Married,Employed,Chinnamanur,3,True,NPHH,True,Pucca,Good,False,False,False
+CIT10177,36,Female,31763,Agricultural Laborer,0.64,3,Primary,False,Married,Self-Employed,Keeranur,2,True,PHH,True,Kutcha,Good,False,False,True
+CIT10178,84,Male,33643,Small Business Owner,0.0,3,Secondary,False,Single,Employed,Melur,0,True,PHH,True,Kutcha,Good,False,True,False
+CIT10179,36,Female,26937,Unemployed,0.0,5,Higher Secondary,False,Divorced,Unemployed,Kovilpatti,1,True,PHH,True,Kutcha,Good,False,False,True
+CIT10180,37,Female,28305,Student,0.0,3,Graduate,False,Single,Employed,Melur,2,True,PHH,True,Kutcha,Good,False,False,True
+CIT10181,69,Female,75476,Farmer,1.07,2,Higher Secondary,False,Married,Seasonal,Perur,1,True,NPHH,True,Pucca,Good,True,True,True
+CIT10182,50,Female,88073,Agricultural Laborer,0.06,3,Higher Secondary,False,Married,Seasonal,Sundarpuram,1,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10183,57,Female,70576,Private Service,0.44,5,Secondary,False,Married,Employed,Keeranur,2,True,AAY,True,Semi-Pucca,Good,True,False,False
+CIT10184,56,Male,82973,Farmer,0.08,2,Primary,False,Single,Employed,Sundarpuram,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10185,18,Male,12000,Agricultural Laborer,0.0,8,Primary,False,Married,Self-Employed,Vadapalani,1,True,PHH,True,Pucca,Good,False,False,True
+CIT10186,28,Female,72653,Retired,0.0,4,Secondary,False,Married,Employed,Sundarpuram,2,True,PHH,True,Kutcha,Good,False,False,True
+CIT10187,74,Female,60259,Student,1.62,8,Illiterate,False,Married,Seasonal,Kovilpatti,2,True,PHH,True,Kutcha,Good,True,True,False
+CIT10188,67,Male,59417,Student,0.48,6,Secondary,False,Married,Unemployed,Perur,1,True,PHH,True,Semi-Pucca,Chronic Illness,False,True,False
+CIT10189,40,Female,12000,Farmer,0.3,4,Secondary,False,Widowed,Employed,Melur,1,True,NPHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10190,48,Male,65872,Agricultural Laborer,0.0,2,Primary,True,Divorced,Self-Employed,Perur,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10191,59,Female,70681,Farmer,0.0,2,Graduate,False,Single,Unemployed,Keeranur,4,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10192,24,Male,72348,Small Business Owner,2.63,3,Secondary,True,Married,Seasonal,Sundarpuram,0,True,PHH,True,Kutcha,Good,True,False,True
+CIT10193,33,Male,287281,Farmer,4.21,4,Primary,False,Married,Seasonal,Keeranur,0,True,AAY,True,Kutcha,Chronic Illness,True,False,True
+CIT10194,77,Male,30412,Unemployed,1.26,3,Secondary,False,Married,Employed,Melur,1,True,AAY,True,Pucca,Chronic Illness,True,True,True
+CIT10195,19,Male,25161,Unemployed,0.7,3,Secondary,False,Married,Employed,Keeranur,2,True,None,True,Kutcha,Good,False,False,True
+CIT10196,18,Female,108132,Agricultural Laborer,0.1,3,Primary,False,Married,Seasonal,Vadapalani,0,True,AAY,True,Pucca,Good,False,False,False
+CIT10197,65,Male,24210,Farmer,0.71,6,Illiterate,False,Widowed,Seasonal,Perur,0,True,AAY,True,Kutcha,Good,True,True,False
+CIT10198,29,Female,22931,Farmer,0.69,2,Secondary,True,Widowed,Employed,Melur,0,True,AAY,True,Pucca,Good,True,False,True
+CIT10199,54,Male,12000,Unemployed,0.2,1,Graduate,False,Single,Self-Employed,Melur,2,True,NPHH,True,Pucca,Good,True,False,False
+CIT10200,49,Female,37049,Small Business Owner,0.08,2,Secondary,True,Married,Unemployed,Chinnamanur,0,True,PHH,True,Pucca,Good,False,False,True
+CIT10201,26,Male,26813,Student,0.0,6,Graduate,False,Married,Employed,Melur,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10202,36,Male,63797,Farmer,0.0,4,Higher Secondary,False,Married,Seasonal,Chinnamanur,1,True,PHH,False,Kutcha,Good,False,False,False
+CIT10203,65,Female,66245,Agricultural Laborer,0.47,3,Illiterate,False,Married,Employed,Kovilpatti,2,True,NPHH,True,Kutcha,Minor Ailment,True,True,False
+CIT10204,20,Other,57603,Student,0.44,2,Secondary,False,Married,Seasonal,Chinnamanur,1,True,PHH,True,Semi-Pucca,Chronic Illness,True,False,True
+CIT10205,37,Female,44240,Agricultural Laborer,1.19,3,Primary,False,Widowed,Employed,Perur,0,True,AAY,True,Kutcha,Good,True,False,True
+CIT10206,41,Female,63182,Small Business Owner,0.57,2,Primary,False,Married,Self-Employed,Keeranur,1,True,None,True,Kutcha,Good,True,False,False
+CIT10207,71,Female,129143,Unemployed,0.0,6,Secondary,False,Married,Employed,Chinnamanur,3,True,PHH,True,Pucca,Good,False,True,False
+CIT10208,50,Male,168942,Farmer,2.4,5,Secondary,False,Married,Unemployed,Melur,1,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10209,41,Female,36310,Farmer,4.36,4,Illiterate,False,Married,Self-Employed,Perur,4,True,None,True,Semi-Pucca,Good,True,False,False
+CIT10210,53,Female,27247,Agricultural Laborer,0.97,5,Graduate,False,Married,Employed,Chinnamanur,2,True,PHH,False,Pucca,Good,True,False,False
+CIT10211,55,Female,212319,Farmer,0.0,3,Higher Secondary,False,Married,Unemployed,Chinnamanur,0,True,NPHH,True,Semi-Pucca,Disabled,False,False,False
+CIT10212,42,Female,135782,Unemployed,0.3,4,Graduate,False,Single,Unemployed,Melur,1,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10213,35,Female,17870,Student,0.0,5,Primary,False,Married,Employed,Vadapalani,0,True,NPHH,True,Pucca,Good,False,False,True
+CIT10214,83,Female,154552,Artisan,0.93,3,Graduate,False,Married,Self-Employed,Vadapalani,1,True,PHH,True,Kutcha,Good,True,True,True
+CIT10215,71,Male,111445,Small Business Owner,3.52,5,Primary,False,Widowed,Employed,Chinnamanur,0,True,AAY,True,Kutcha,Good,True,True,True
+CIT10216,52,Female,12000,Farmer,0.06,3,Illiterate,False,Married,Unemployed,Vadapalani,0,True,NPHH,True,Pucca,Good,False,False,False
+CIT10217,78,Male,23507,Farmer,3.12,3,Higher Secondary,False,Married,Unemployed,Sundarpuram,3,True,PHH,True,Pucca,Chronic Illness,True,True,True
+CIT10218,58,Female,85936,Unemployed,5.0,2,Secondary,False,Married,Unemployed,Melur,0,True,PHH,True,Pucca,Disabled,True,False,False
+CIT10219,50,Female,17781,Farmer,0.29,3,Secondary,False,Married,Employed,Sundarpuram,2,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10220,50,Male,168308,Student,0.0,4,Secondary,False,Single,Unemployed,Perur,0,True,None,True,Pucca,Good,False,False,True
+CIT10221,31,Female,15723,Unemployed,0.0,6,Illiterate,False,Widowed,Unemployed,Sundarpuram,0,True,NPHH,True,Kutcha,Disabled,False,False,False
+CIT10222,38,Female,67671,Farmer,0.0,4,Secondary,False,Widowed,Self-Employed,Perur,2,True,PHH,True,Kutcha,Good,False,False,True
+CIT10223,65,Female,33755,Farmer,0.86,5,Primary,False,Married,Self-Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Chronic Illness,True,True,True
+CIT10224,37,Female,156495,Small Business Owner,3.81,5,Secondary,True,Married,Unemployed,Perur,2,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10225,25,Male,28688,Artisan,7.98,2,Primary,False,Single,Employed,Perur,0,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10226,24,Female,63670,Farmer,3.14,4,Graduate,False,Married,Employed,Keeranur,1,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10227,84,Female,110637,Private Service,0.0,2,Secondary,False,Married,Employed,Sundarpuram,2,True,PHH,True,Kutcha,Good,False,True,True
+CIT10228,34,Male,52053,Small Business Owner,0.62,4,Secondary,False,Single,Employed,Keeranur,1,True,NPHH,True,Semi-Pucca,Chronic Illness,True,False,False
+CIT10229,50,Female,51392,Retired,2.79,6,Graduate,False,Married,Employed,Chinnamanur,1,True,NPHH,True,Pucca,Good,True,False,False
+CIT10230,65,Male,55703,Farmer,0.0,2,Secondary,False,Married,Employed,Melur,3,True,None,True,Semi-Pucca,Good,False,True,False
+CIT10231,76,Male,158703,Farmer,0.0,4,Illiterate,False,Married,Employed,Sundarpuram,1,True,AAY,True,Kutcha,Good,False,True,True
+CIT10232,39,Female,39257,Unemployed,2.52,4,Illiterate,False,Widowed,Employed,Melur,3,True,NPHH,True,Semi-Pucca,Disabled,True,False,True
+CIT10233,47,Female,30757,Artisan,10.55,4,Secondary,False,Single,Employed,Melur,2,True,NPHH,True,Semi-Pucca,Good,True,False,False
+CIT10234,55,Male,41705,Agricultural Laborer,0.53,3,Primary,False,Married,Employed,Perur,2,True,PHH,True,Semi-Pucca,Chronic Illness,True,False,False
+CIT10235,68,Female,32567,Student,0.0,3,Secondary,False,Married,Employed,Sundarpuram,0,True,AAY,True,Kutcha,Good,False,True,True
+CIT10236,71,Male,12000,Artisan,5.04,1,Primary,False,Married,Unemployed,Melur,1,True,PHH,True,Semi-Pucca,Good,True,True,True
+CIT10237,25,Male,18261,Farmer,0.15,3,Primary,True,Married,Unemployed,Vadapalani,2,True,PHH,True,Pucca,Good,False,False,False
+CIT10238,44,Male,33066,Small Business Owner,0.0,1,Secondary,False,Married,Employed,Melur,0,True,PHH,True,Kutcha,Good,False,False,False
+CIT10239,44,Male,18699,Artisan,1.02,4,Graduate,True,Widowed,Unemployed,Vadapalani,0,True,AAY,True,Kutcha,Good,False,False,True
+CIT10240,38,Male,65718,Agricultural Laborer,8.81,2,Secondary,False,Married,Employed,Sundarpuram,0,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10241,47,Female,197230,Farmer,0.0,6,Graduate,True,Married,Employed,Chinnamanur,0,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10242,45,Female,52811,Unemployed,0.67,4,Graduate,False,Married,Employed,Keeranur,3,True,PHH,True,Kutcha,Good,True,False,True
+CIT10243,81,Male,40698,Farmer,0.73,4,Primary,False,Married,Unemployed,Sundarpuram,2,True,PHH,True,Kutcha,Good,True,True,False
+CIT10244,78,Female,24472,Farmer,0.0,3,Primary,False,Married,Self-Employed,Keeranur,1,False,PHH,True,Kutcha,Good,False,True,False
+CIT10245,65,Female,108365,Retired,9.93,4,Higher Secondary,False,Widowed,Employed,Keeranur,0,True,AAY,True,Pucca,Chronic Illness,True,True,False
+CIT10246,36,Male,230531,Small Business Owner,0.0,6,Higher Secondary,False,Married,Employed,Sundarpuram,2,True,AAY,True,Semi-Pucca,Good,False,False,True
+CIT10247,21,Female,14668,Unemployed,0.0,2,Secondary,False,Married,Seasonal,Melur,1,True,PHH,True,Semi-Pucca,Minor Ailment,False,False,True
+CIT10248,52,Other,118484,Unemployed,0.2,3,Graduate,False,Married,Employed,Kovilpatti,4,True,AAY,True,Pucca,Good,True,False,True
+CIT10249,81,Male,51124,Farmer,0.36,5,Illiterate,False,Married,Employed,Melur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10250,66,Male,45805,Farmer,0.92,2,Primary,False,Widowed,Seasonal,Melur,0,True,PHH,True,Pucca,Good,True,True,False
+CIT10251,34,Female,78607,Farmer,6.51,2,Secondary,False,Divorced,Self-Employed,Chinnamanur,1,False,NPHH,True,Semi-Pucca,Good,True,False,True
+CIT10252,61,Female,67143,Farmer,0.59,3,Secondary,False,Married,Unemployed,Perur,4,True,None,True,Kutcha,Good,True,True,True
+CIT10253,47,Male,37978,Student,0.0,2,Illiterate,False,Single,Unemployed,Perur,1,True,PHH,True,Pucca,Good,False,False,True
+CIT10254,63,Female,79894,Small Business Owner,2.04,4,Primary,False,Single,Employed,Melur,1,True,PHH,True,Pucca,Good,True,True,True
+CIT10255,23,Female,111938,Agricultural Laborer,0.0,3,Illiterate,True,Married,Employed,Vadapalani,0,True,AAY,True,Pucca,Good,False,False,False
+CIT10256,54,Female,33289,Farmer,0.0,6,Secondary,False,Widowed,Unemployed,Chinnamanur,2,True,NPHH,True,Kutcha,Minor Ailment,False,False,False
+CIT10257,41,Female,150936,Agricultural Laborer,3.94,5,Higher Secondary,False,Married,Employed,Keeranur,2,True,PHH,True,Pucca,Disabled,True,False,True
+CIT10258,63,Female,12000,Agricultural Laborer,0.0,4,Higher Secondary,False,Single,Unemployed,Perur,0,True,NPHH,True,Pucca,Good,False,True,False
+CIT10259,70,Male,12217,Agricultural Laborer,3.73,4,Secondary,False,Single,Seasonal,Melur,1,True,PHH,True,Kutcha,Good,True,True,True
+CIT10260,77,Male,51989,Farmer,1.88,5,Secondary,True,Married,Seasonal,Chinnamanur,0,True,AAY,True,Kutcha,Chronic Illness,True,True,True
+CIT10261,80,Female,98697,Small Business Owner,0.2,3,Secondary,False,Married,Employed,Kovilpatti,0,True,PHH,True,Kutcha,Minor Ailment,True,True,False
+CIT10262,49,Female,105997,Farmer,0.0,6,Illiterate,True,Married,Self-Employed,Vadapalani,0,True,PHH,True,Pucca,Good,False,False,True
+CIT10263,50,Male,12000,Agricultural Laborer,0.0,5,Primary,False,Married,Unemployed,Sundarpuram,0,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10264,84,Female,27356,Student,0.0,4,Illiterate,False,Married,Seasonal,Melur,1,True,PHH,True,Kutcha,Minor Ailment,False,True,True
+CIT10265,35,Female,22145,Farmer,0.27,4,Higher Secondary,False,Married,Employed,Chinnamanur,0,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10266,42,Male,42217,Small Business Owner,0.0,3,Graduate,False,Married,Employed,Melur,0,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10267,71,Female,194842,Farmer,0.0,3,Secondary,False,Single,Employed,Keeranur,2,True,AAY,True,Semi-Pucca,Good,False,True,False
+CIT10268,75,Female,39678,Farmer,0.0,5,Secondary,False,Married,Employed,Vadapalani,1,True,PHH,True,Semi-Pucca,Minor Ailment,False,True,False
+CIT10269,84,Female,12000,Farmer,0.0,1,Illiterate,False,Married,Employed,Perur,1,True,NPHH,True,Pucca,Chronic Illness,False,True,False
+CIT10270,63,Female,27382,Private Service,0.0,5,Secondary,False,Divorced,Self-Employed,Perur,1,True,PHH,True,Semi-Pucca,Chronic Illness,False,True,True
+CIT10271,41,Male,45039,Agricultural Laborer,3.73,3,Secondary,False,Married,Self-Employed,Perur,1,True,PHH,True,Pucca,Chronic Illness,True,False,False
+CIT10272,49,Female,85862,Retired,0.2,2,Secondary,True,Single,Employed,Sundarpuram,0,True,PHH,True,Kutcha,Good,True,False,False
+CIT10273,64,Male,38800,Agricultural Laborer,0.15,2,Primary,False,Single,Unemployed,Chinnamanur,2,True,PHH,True,Kutcha,Chronic Illness,False,True,True
+CIT10274,40,Male,106768,Agricultural Laborer,0.14,1,Higher Secondary,False,Married,Employed,Vadapalani,0,True,AAY,True,Semi-Pucca,Good,False,False,True
+CIT10275,83,Female,62733,Agricultural Laborer,1.64,4,Secondary,False,Married,Seasonal,Vadapalani,1,True,PHH,True,Kutcha,Minor Ailment,True,True,False
+CIT10276,44,Male,62436,Farmer,0.0,3,Higher Secondary,False,Single,Seasonal,Perur,0,False,NPHH,True,Kutcha,Good,False,False,False
+CIT10277,19,Male,23650,Farmer,1.05,8,Higher Secondary,False,Married,Seasonal,Perur,2,True,PHH,True,Pucca,Disabled,True,False,True
+CIT10278,34,Female,96013,Farmer,0.23,4,Graduate,False,Married,Seasonal,Keeranur,1,True,None,True,Semi-Pucca,Good,True,False,False
+CIT10279,50,Male,12000,Agricultural Laborer,0.0,2,Illiterate,False,Single,Employed,Kovilpatti,1,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10280,26,Male,130215,Farmer,0.52,4,Illiterate,False,Married,Employed,Kovilpatti,0,False,NPHH,True,Kutcha,Good,True,False,True
+CIT10281,60,Female,158826,Farmer,0.0,6,Primary,False,Married,Unemployed,Melur,1,True,PHH,True,Kutcha,Good,False,True,False
+CIT10282,65,Female,22451,Farmer,1.02,4,Illiterate,False,Married,Seasonal,Melur,4,True,PHH,True,Pucca,Chronic Illness,True,True,True
+CIT10283,56,Male,46949,Agricultural Laborer,0.0,2,Secondary,False,Married,Employed,Vadapalani,2,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10284,59,Female,54182,Student,7.77,6,Secondary,False,Married,Employed,Vadapalani,0,False,AAY,True,Kutcha,Good,True,False,True
+CIT10285,43,Female,12000,Artisan,0.0,5,Secondary,False,Single,Self-Employed,Sundarpuram,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10286,67,Female,69997,Farmer,3.86,2,Primary,True,Widowed,Employed,Sundarpuram,3,True,NPHH,True,Kutcha,Minor Ailment,True,True,True
+CIT10287,42,Female,12000,Farmer,0.0,2,Graduate,True,Married,Unemployed,Kovilpatti,1,True,NPHH,False,Kutcha,Chronic Illness,False,False,False
+CIT10288,41,Other,53198,Agricultural Laborer,1.92,4,Illiterate,False,Married,Self-Employed,Melur,1,True,PHH,True,Kutcha,Chronic Illness,True,False,True
+CIT10289,30,Female,239210,Artisan,0.46,2,Primary,False,Single,Employed,Kovilpatti,3,True,NPHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10290,77,Female,12000,Farmer,0.0,5,Secondary,False,Single,Employed,Kovilpatti,2,True,NPHH,True,Kutcha,Chronic Illness,False,True,True
+CIT10291,24,Female,20644,Student,2.73,3,Higher Secondary,False,Single,Self-Employed,Melur,1,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10292,74,Male,145930,Agricultural Laborer,0.0,6,Primary,True,Single,Self-Employed,Chinnamanur,1,True,PHH,True,Pucca,Chronic Illness,False,True,True
+CIT10293,53,Male,23835,Farmer,1.75,4,Illiterate,False,Married,Seasonal,Sundarpuram,0,True,PHH,True,Kutcha,Good,True,False,True
+CIT10294,62,Female,38135,Farmer,7.69,2,Secondary,False,Widowed,Employed,Keeranur,2,True,PHH,True,Pucca,Disabled,True,True,False
+CIT10295,37,Female,324722,Farmer,3.09,2,Illiterate,False,Married,Employed,Keeranur,0,True,AAY,True,Pucca,Chronic Illness,True,False,False
+CIT10296,82,Female,45584,Artisan,0.0,4,Illiterate,False,Married,Self-Employed,Keeranur,0,True,NPHH,True,Semi-Pucca,Good,False,True,False
+CIT10297,25,Male,37738,Agricultural Laborer,0.0,5,Secondary,False,Married,Unemployed,Melur,1,False,PHH,True,Kutcha,Good,False,False,False
+CIT10298,33,Female,12000,Small Business Owner,0.0,5,Primary,False,Single,Employed,Perur,0,True,AAY,True,Kutcha,Good,False,False,True
+CIT10299,31,Male,17719,Small Business Owner,0.0,3,Primary,False,Married,Self-Employed,Perur,1,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10300,32,Male,82238,Small Business Owner,0.55,3,Secondary,False,Married,Employed,Perur,1,True,AAY,True,Semi-Pucca,Good,True,False,False
+CIT10301,83,Female,67719,Agricultural Laborer,0.0,1,Graduate,False,Married,Employed,Vadapalani,1,True,None,True,Semi-Pucca,Disabled,False,True,False
+CIT10302,49,Female,20849,Farmer,0.0,4,Graduate,False,Divorced,Employed,Sundarpuram,1,True,AAY,True,Kutcha,Good,False,False,True
+CIT10303,80,Female,93040,Farmer,0.2,2,Primary,True,Married,Employed,Sundarpuram,3,True,AAY,True,Pucca,Good,True,True,False
+CIT10304,68,Male,49345,Farmer,0.0,3,Primary,True,Married,Unemployed,Chinnamanur,0,True,PHH,True,Kutcha,Disabled,False,True,True
+CIT10305,42,Male,12000,Student,0.0,4,Primary,False,Widowed,Unemployed,Chinnamanur,2,True,PHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10306,75,Female,26649,Farmer,1.75,6,Primary,False,Married,Self-Employed,Vadapalani,3,True,NPHH,True,Semi-Pucca,Good,True,True,True
+CIT10307,80,Male,282146,Small Business Owner,4.47,3,Secondary,False,Married,Seasonal,Kovilpatti,1,False,PHH,True,Kutcha,Chronic Illness,True,True,False
+CIT10308,79,Female,24642,Farmer,0.2,3,Secondary,False,Widowed,Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10309,39,Female,83008,Private Service,4.38,4,Secondary,False,Single,Employed,Keeranur,3,False,NPHH,True,Pucca,Good,True,False,False
+CIT10310,75,Female,94254,Farmer,0.0,4,Primary,False,Widowed,Employed,Perur,0,False,PHH,True,Pucca,Good,False,True,True
+CIT10311,75,Female,90372,Farmer,0.54,3,Primary,False,Single,Employed,Keeranur,1,True,AAY,False,Pucca,Good,True,True,False
+CIT10312,66,Female,56704,Private Service,1.18,6,Secondary,False,Married,Self-Employed,Perur,1,True,AAY,True,Semi-Pucca,Good,True,True,True
+CIT10313,69,Female,23267,Agricultural Laborer,0.0,5,Primary,False,Widowed,Self-Employed,Keeranur,0,True,AAY,False,Semi-Pucca,Minor Ailment,False,True,False
+CIT10314,59,Male,79409,Retired,0.0,3,Secondary,False,Married,Self-Employed,Kovilpatti,2,True,NPHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10315,32,Male,22657,Farmer,0.28,3,Secondary,False,Married,Employed,Keeranur,2,True,AAY,True,Semi-Pucca,Good,True,False,True
+CIT10316,71,Male,67225,Farmer,0.64,4,Secondary,False,Married,Employed,Keeranur,2,False,AAY,True,Kutcha,Good,False,True,True
+CIT10317,77,Male,12000,Student,0.46,5,Secondary,False,Widowed,Unemployed,Melur,0,True,NPHH,True,Kutcha,Good,True,True,False
+CIT10318,25,Female,30937,Artisan,0.0,1,Secondary,True,Married,Employed,Keeranur,0,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10319,70,Female,101672,Farmer,0.0,4,Primary,False,Married,Self-Employed,Melur,1,True,AAY,True,Semi-Pucca,Chronic Illness,False,True,True
+CIT10320,77,Male,86803,Private Service,5.23,4,Illiterate,False,Married,Seasonal,Sundarpuram,0,True,AAY,True,Semi-Pucca,Good,True,True,True
+CIT10321,22,Male,140649,Small Business Owner,0.0,3,Secondary,False,Married,Employed,Vadapalani,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10322,23,Male,25911,Unemployed,0.09,4,Primary,False,Married,Self-Employed,Keeranur,1,True,PHH,True,Kutcha,Good,False,False,False
+CIT10323,64,Female,58350,Agricultural Laborer,0.34,6,Secondary,False,Married,Unemployed,Sundarpuram,1,True,NPHH,True,Pucca,Good,False,True,False
+CIT10324,72,Female,113926,Farmer,0.21,1,Secondary,False,Married,Employed,Chinnamanur,1,True,PHH,True,Pucca,Good,False,True,True
+CIT10325,57,Male,12856,Private Service,0.3,3,Graduate,False,Married,Unemployed,Chinnamanur,1,True,AAY,True,Semi-Pucca,Good,False,False,True
+CIT10326,69,Female,16319,Private Service,0.0,3,Graduate,False,Single,Employed,Melur,0,True,None,True,Semi-Pucca,Good,False,True,False
+CIT10327,33,Female,18555,Agricultural Laborer,0.0,6,Illiterate,False,Single,Employed,Keeranur,0,True,PHH,True,Kutcha,Good,False,False,True
+CIT10328,30,Male,12000,Farmer,2.94,7,Graduate,False,Single,Self-Employed,Keeranur,1,True,NPHH,False,Pucca,Good,True,False,True
+CIT10329,47,Female,98219,Farmer,0.0,3,Secondary,False,Widowed,Seasonal,Kovilpatti,1,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10330,36,Female,207889,Small Business Owner,0.35,5,Secondary,False,Married,Employed,Sundarpuram,2,True,NPHH,False,Pucca,Disabled,False,False,False
+CIT10331,34,Male,64863,Farmer,4.01,4,Illiterate,False,Married,Employed,Perur,2,True,PHH,True,Semi-Pucca,Minor Ailment,True,False,True
+CIT10332,80,Male,12000,Agricultural Laborer,0.0,4,Higher Secondary,False,Married,Seasonal,Perur,4,True,NPHH,True,Pucca,Disabled,False,True,False
+CIT10333,36,Male,111135,Farmer,0.0,3,Illiterate,False,Married,Self-Employed,Kovilpatti,0,True,PHH,True,Pucca,Chronic Illness,False,False,False
+CIT10334,75,Male,26782,Student,0.0,3,Higher Secondary,False,Married,Self-Employed,Melur,0,True,PHH,True,Kutcha,Good,False,True,True
+CIT10335,72,Female,29810,Farmer,1.01,3,Illiterate,False,Married,Employed,Perur,0,True,PHH,True,Kutcha,Good,True,True,True
+CIT10336,79,Female,12000,Agricultural Laborer,2.96,4,Secondary,False,Married,Seasonal,Perur,2,True,PHH,True,Semi-Pucca,Minor Ailment,True,True,False
+CIT10337,40,Male,29684,Small Business Owner,1.86,1,Primary,False,Widowed,Employed,Chinnamanur,1,True,NPHH,True,Semi-Pucca,Good,True,False,False
+CIT10338,26,Male,172158,Small Business Owner,0.0,6,Primary,True,Married,Self-Employed,Chinnamanur,2,True,PHH,True,Kutcha,Good,False,False,False
+CIT10339,29,Male,65343,Agricultural Laborer,0.05,2,Illiterate,False,Married,Employed,Vadapalani,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10340,18,Male,66481,Farmer,0.33,3,Primary,True,Married,Self-Employed,Sundarpuram,3,True,AAY,True,Semi-Pucca,Good,False,False,True
+CIT10341,75,Female,138646,Student,0.0,4,Illiterate,False,Widowed,Employed,Melur,3,True,AAY,True,Pucca,Good,False,True,False
+CIT10342,18,Male,27954,Unemployed,0.0,4,Secondary,False,Married,Unemployed,Keeranur,0,True,AAY,True,Pucca,Good,False,False,True
+CIT10343,51,Male,312217,Student,0.0,2,Secondary,False,Single,Employed,Sundarpuram,1,True,AAY,True,Semi-Pucca,Chronic Illness,False,False,False
+CIT10344,65,Male,48631,Private Service,0.39,3,Higher Secondary,False,Married,Employed,Melur,1,True,PHH,True,Pucca,Good,True,True,False
+CIT10345,18,Female,155349,Student,0.0,7,Secondary,False,Married,Self-Employed,Perur,0,False,PHH,True,Semi-Pucca,Chronic Illness,False,False,False
+CIT10346,33,Male,12000,Unemployed,0.0,3,Illiterate,False,Married,Seasonal,Vadapalani,1,True,NPHH,True,Pucca,Good,False,False,False
+CIT10347,78,Female,49855,Farmer,1.18,3,Primary,False,Married,Seasonal,Sundarpuram,1,True,AAY,True,Kutcha,Minor Ailment,True,True,False
+CIT10348,81,Male,30246,Agricultural Laborer,7.21,5,Primary,False,Widowed,Employed,Perur,0,True,None,True,Kutcha,Good,True,True,True
+CIT10349,80,Female,231879,Agricultural Laborer,0.0,2,Graduate,False,Widowed,Self-Employed,Melur,1,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10350,39,Female,151612,Farmer,1.44,4,Higher Secondary,False,Married,Self-Employed,Sundarpuram,1,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10351,84,Male,14701,Agricultural Laborer,11.65,3,Primary,False,Widowed,Employed,Keeranur,0,True,PHH,True,Semi-Pucca,Good,True,True,False
+CIT10352,43,Male,112921,Farmer,0.0,3,Illiterate,True,Single,Employed,Sundarpuram,1,True,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10353,33,Female,22406,Student,0.18,3,Higher Secondary,False,Single,Self-Employed,Perur,0,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10354,68,Female,93975,Agricultural Laborer,3.89,2,Higher Secondary,False,Single,Seasonal,Sundarpuram,2,True,PHH,True,Pucca,Good,True,True,False
+CIT10355,74,Male,12000,Agricultural Laborer,0.0,3,Higher Secondary,True,Single,Self-Employed,Keeranur,0,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10356,46,Male,120214,Retired,0.0,1,Higher Secondary,False,Married,Unemployed,Vadapalani,2,True,NPHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10357,64,Female,60806,Agricultural Laborer,3.34,5,Secondary,False,Single,Unemployed,Vadapalani,1,True,NPHH,True,Semi-Pucca,Chronic Illness,True,True,False
+CIT10358,79,Female,171056,Agricultural Laborer,0.0,3,Illiterate,False,Married,Employed,Perur,0,True,PHH,True,Pucca,Good,False,True,False
+CIT10359,33,Male,61339,Farmer,0.5,3,Secondary,False,Single,Self-Employed,Melur,1,True,AAY,True,Pucca,Good,False,False,False
+CIT10360,65,Female,101432,Artisan,0.62,6,Secondary,False,Married,Self-Employed,Perur,1,True,NPHH,True,Semi-Pucca,Chronic Illness,True,True,False
+CIT10361,56,Male,49969,Agricultural Laborer,5.1,4,Secondary,False,Single,Employed,Vadapalani,1,True,AAY,True,Kutcha,Good,True,False,False
+CIT10362,50,Female,241526,Small Business Owner,2.22,1,Secondary,False,Married,Seasonal,Kovilpatti,1,True,AAY,True,Semi-Pucca,Good,True,False,False
+CIT10363,40,Male,16554,Farmer,0.2,6,Primary,False,Single,Employed,Kovilpatti,1,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10364,27,Male,74883,Agricultural Laborer,0.0,3,Primary,False,Widowed,Seasonal,Sundarpuram,0,True,PHH,True,Pucca,Good,False,False,False
+CIT10365,51,Male,16898,Farmer,0.0,2,Primary,False,Married,Employed,Keeranur,0,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10366,69,Female,77625,Student,2.5,5,Illiterate,False,Single,Employed,Chinnamanur,2,True,PHH,True,Pucca,Good,True,True,False
+CIT10367,27,Male,73439,Unemployed,2.79,4,Secondary,False,Widowed,Employed,Chinnamanur,1,True,AAY,True,Semi-Pucca,Good,True,False,True
+CIT10368,36,Male,40781,Student,1.24,3,Higher Secondary,False,Single,Unemployed,Chinnamanur,1,True,NPHH,True,Pucca,Good,True,False,True
+CIT10369,75,Male,79819,Student,0.0,3,Higher Secondary,False,Married,Employed,Sundarpuram,2,True,AAY,True,Kutcha,Minor Ailment,False,True,False
+CIT10370,18,Female,14635,Agricultural Laborer,0.0,4,Primary,False,Single,Unemployed,Kovilpatti,1,True,PHH,True,Pucca,Good,False,False,True
+CIT10371,21,Female,206144,Student,0.0,3,Secondary,False,Married,Unemployed,Vadapalani,2,True,PHH,True,Pucca,Good,False,False,False
+CIT10372,33,Male,44867,Agricultural Laborer,3.86,6,Illiterate,True,Married,Self-Employed,Sundarpuram,0,True,NPHH,True,Pucca,Good,True,False,True
+CIT10373,41,Female,85257,Student,3.27,3,Secondary,False,Married,Employed,Chinnamanur,0,True,PHH,True,Kutcha,Good,True,False,True
+CIT10374,19,Female,49881,Farmer,0.75,6,Primary,False,Married,Unemployed,Chinnamanur,3,True,NPHH,True,Kutcha,Good,True,False,True
+CIT10375,49,Female,244708,Farmer,0.0,4,Primary,False,Married,Employed,Perur,1,True,AAY,True,Semi-Pucca,Good,False,False,False
+CIT10376,41,Male,117051,Agricultural Laborer,0.0,5,Higher Secondary,False,Single,Self-Employed,Chinnamanur,2,True,PHH,False,Kutcha,Good,False,False,True
+CIT10377,29,Male,33526,Agricultural Laborer,0.47,4,Secondary,False,Married,Employed,Keeranur,0,True,NPHH,True,Kutcha,Good,True,False,False
+CIT10378,67,Male,76040,Farmer,3.13,4,Illiterate,False,Married,Seasonal,Chinnamanur,1,True,PHH,True,Kutcha,Good,True,True,False
+CIT10379,52,Male,240496,Student,0.0,3,Primary,False,Single,Self-Employed,Perur,2,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10380,50,Male,38211,Farmer,1.15,3,Secondary,False,Single,Unemployed,Chinnamanur,0,True,None,True,Semi-Pucca,Chronic Illness,True,False,False
+CIT10381,50,Female,27623,Farmer,1.72,3,Primary,False,Single,Unemployed,Keeranur,2,True,None,True,Kutcha,Good,True,False,True
+CIT10382,78,Male,19190,Student,0.2,5,Higher Secondary,False,Married,Employed,Vadapalani,1,True,PHH,True,Kutcha,Good,True,True,True
+CIT10383,68,Male,12156,Agricultural Laborer,0.69,5,Secondary,False,Married,Employed,Sundarpuram,1,False,AAY,False,Semi-Pucca,Good,True,True,True
+CIT10384,60,Female,109632,Student,1.81,3,Secondary,False,Single,Seasonal,Keeranur,1,True,PHH,True,Semi-Pucca,Good,True,True,False
+CIT10385,29,Male,12000,Small Business Owner,0.06,2,Secondary,False,Married,Seasonal,Perur,2,True,PHH,True,Kutcha,Minor Ailment,False,False,False
+CIT10386,84,Female,65643,Retired,0.29,3,Primary,False,Married,Employed,Sundarpuram,0,True,PHH,True,Kutcha,Good,True,True,False
+CIT10387,82,Female,36737,Small Business Owner,0.2,4,Primary,False,Widowed,Unemployed,Sundarpuram,0,True,AAY,True,Pucca,Good,True,True,True
+CIT10388,50,Male,81364,Farmer,2.41,4,Primary,False,Married,Self-Employed,Perur,2,False,PHH,True,Pucca,Good,True,False,False
+CIT10389,57,Female,57757,Agricultural Laborer,1.26,5,Secondary,False,Married,Self-Employed,Kovilpatti,2,True,NPHH,True,Pucca,Good,True,False,True
+CIT10390,60,Female,35980,Farmer,0.0,8,Primary,False,Widowed,Employed,Chinnamanur,0,True,NPHH,True,Pucca,Good,False,True,False
+CIT10391,61,Female,37197,Private Service,0.0,2,Higher Secondary,False,Married,Employed,Keeranur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10392,46,Male,57364,Farmer,1.53,4,Primary,False,Married,Employed,Perur,1,True,PHH,False,Semi-Pucca,Good,True,False,False
+CIT10393,30,Female,69592,Agricultural Laborer,0.0,3,Illiterate,False,Single,Self-Employed,Vadapalani,1,True,PHH,True,Semi-Pucca,Minor Ailment,False,False,False
+CIT10394,29,Female,129875,Farmer,2.76,3,Illiterate,False,Married,Unemployed,Melur,0,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10395,63,Male,159021,Unemployed,0.0,2,Illiterate,False,Married,Unemployed,Perur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10396,19,Male,39634,Farmer,1.53,2,Primary,False,Married,Seasonal,Chinnamanur,0,True,NPHH,True,Semi-Pucca,Minor Ailment,True,False,True
+CIT10397,52,Male,61646,Retired,8.83,6,Illiterate,False,Single,Self-Employed,Chinnamanur,2,True,NPHH,True,Semi-Pucca,Chronic Illness,True,False,True
+CIT10398,25,Female,116443,Farmer,0.01,3,Illiterate,False,Married,Seasonal,Sundarpuram,2,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10399,43,Male,38012,Farmer,0.0,4,Secondary,False,Married,Unemployed,Sundarpuram,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10400,51,Female,60237,Farmer,0.12,6,Secondary,False,Married,Employed,Perur,0,True,AAY,True,Kutcha,Chronic Illness,False,False,True
+CIT10401,24,Female,16245,Unemployed,0.46,5,Illiterate,False,Married,Seasonal,Melur,0,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10402,75,Female,12442,Artisan,0.0,2,Secondary,False,Married,Unemployed,Perur,1,True,PHH,True,Kutcha,Good,False,True,True
+CIT10403,46,Female,157730,Farmer,0.0,4,Secondary,False,Married,Employed,Melur,2,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10404,53,Female,125516,Farmer,0.22,3,Graduate,False,Widowed,Employed,Melur,1,True,AAY,True,Kutcha,Good,False,False,False
+CIT10405,38,Female,60420,Student,2.19,5,Secondary,False,Single,Employed,Chinnamanur,1,True,AAY,True,Pucca,Good,True,False,True
+CIT10406,53,Male,162292,Farmer,1.99,4,Primary,False,Single,Unemployed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Good,True,False,True
+CIT10407,27,Female,120854,Farmer,0.21,4,Secondary,False,Married,Seasonal,Chinnamanur,0,True,NPHH,True,Semi-Pucca,Good,True,False,True
+CIT10408,41,Male,90684,Farmer,0.0,3,Secondary,False,Single,Seasonal,Vadapalani,0,True,PHH,True,Kutcha,Disabled,False,False,True
+CIT10409,81,Male,308244,Farmer,0.0,5,Primary,False,Married,Seasonal,Chinnamanur,0,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10410,66,Female,33383,Farmer,1.31,2,Higher Secondary,False,Single,Employed,Keeranur,0,True,NPHH,True,Pucca,Disabled,True,True,False
+CIT10411,53,Female,53825,Farmer,0.0,2,Primary,False,Married,Employed,Sundarpuram,1,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10412,41,Male,258194,Agricultural Laborer,0.39,3,Graduate,False,Single,Employed,Sundarpuram,2,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10413,40,Female,80288,Unemployed,0.0,2,Secondary,True,Married,Seasonal,Melur,2,True,PHH,True,Pucca,Good,False,False,False
+CIT10414,79,Female,71563,Farmer,0.2,3,Secondary,False,Single,Employed,Sundarpuram,0,True,PHH,True,Pucca,Chronic Illness,True,True,False
+CIT10415,54,Female,16994,Student,0.0,5,Secondary,False,Widowed,Self-Employed,Kovilpatti,0,True,PHH,True,Semi-Pucca,Disabled,False,False,False
+CIT10416,29,Female,57274,Farmer,2.44,6,Secondary,False,Married,Self-Employed,Melur,0,True,PHH,True,Kutcha,Good,True,False,False
+CIT10417,72,Female,23072,Student,0.0,3,Secondary,False,Single,Unemployed,Sundarpuram,0,False,PHH,True,Semi-Pucca,Good,False,True,True
+CIT10418,30,Other,21883,Farmer,0.2,3,Higher Secondary,False,Married,Employed,Kovilpatti,1,True,PHH,False,Semi-Pucca,Good,True,False,True
+CIT10419,40,Female,41117,Student,0.53,3,Secondary,False,Married,Seasonal,Vadapalani,1,True,PHH,True,Semi-Pucca,Chronic Illness,True,False,False
+CIT10420,47,Female,181008,Farmer,0.0,3,Higher Secondary,False,Married,Seasonal,Sundarpuram,0,True,PHH,True,Pucca,Good,False,False,True
+CIT10421,34,Female,49382,Artisan,0.0,1,Higher Secondary,True,Married,Employed,Kovilpatti,0,True,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10422,79,Female,12000,Farmer,0.0,6,Graduate,False,Married,Unemployed,Perur,0,True,PHH,True,Pucca,Good,False,True,False
+CIT10423,30,Male,12000,Agricultural Laborer,0.0,3,Secondary,False,Married,Seasonal,Keeranur,0,True,PHH,True,Kutcha,Good,False,False,True
+CIT10424,76,Male,103998,Retired,3.41,3,Secondary,False,Married,Employed,Perur,2,True,NPHH,True,Kutcha,Good,True,True,False
+CIT10425,36,Male,58372,Small Business Owner,0.0,1,Illiterate,False,Single,Unemployed,Kovilpatti,0,True,PHH,False,Kutcha,Good,False,False,True
+CIT10426,66,Male,79380,Agricultural Laborer,1.2,5,Secondary,False,Married,Employed,Melur,1,True,NPHH,True,Pucca,Chronic Illness,True,True,False
+CIT10427,29,Female,63027,Private Service,0.0,4,Primary,False,Married,Unemployed,Chinnamanur,1,True,PHH,True,Pucca,Good,False,False,False
+CIT10428,78,Female,99280,Farmer,0.0,6,Primary,False,Married,Employed,Chinnamanur,2,False,PHH,True,Semi-Pucca,Good,False,True,True
+CIT10429,36,Female,13631,Farmer,0.0,5,Primary,False,Single,Unemployed,Chinnamanur,2,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10430,26,Male,12000,Retired,0.0,3,Higher Secondary,False,Married,Employed,Melur,2,True,PHH,True,Semi-Pucca,Good,False,False,False
+CIT10431,45,Female,42722,Farmer,0.0,3,Higher Secondary,False,Divorced,Unemployed,Sundarpuram,0,False,NPHH,True,Pucca,Chronic Illness,False,False,True
+CIT10432,69,Female,112965,Artisan,0.62,4,Secondary,False,Married,Seasonal,Chinnamanur,1,True,AAY,True,Pucca,Good,False,True,True
+CIT10433,33,Female,23632,Farmer,0.0,3,Secondary,False,Married,Self-Employed,Perur,2,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10434,29,Female,33230,Student,0.84,4,Secondary,False,Married,Self-Employed,Melur,0,True,PHH,False,Semi-Pucca,Good,True,False,False
+CIT10435,42,Female,149900,Agricultural Laborer,0.0,1,Secondary,False,Married,Self-Employed,Melur,1,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10436,69,Male,12000,Retired,0.77,2,Primary,False,Married,Employed,Chinnamanur,2,True,PHH,True,Semi-Pucca,Good,True,True,True
+CIT10437,70,Female,111790,Small Business Owner,0.0,4,Primary,False,Married,Employed,Perur,1,True,AAY,True,Semi-Pucca,Good,False,True,False
+CIT10438,40,Male,12000,Farmer,0.0,4,Primary,False,Widowed,Seasonal,Vadapalani,0,True,PHH,True,Kutcha,Good,False,False,True
+CIT10439,33,Male,12000,Small Business Owner,2.9,5,Secondary,False,Married,Employed,Melur,0,True,None,True,Pucca,Chronic Illness,True,False,False
+CIT10440,74,Female,77077,Farmer,0.0,2,Secondary,False,Single,Employed,Chinnamanur,1,True,PHH,True,Semi-Pucca,Good,False,True,True
+CIT10441,56,Male,30890,Unemployed,0.61,4,Secondary,False,Single,Self-Employed,Keeranur,0,True,PHH,True,Pucca,Good,True,False,False
+CIT10442,70,Female,23819,Artisan,3.04,2,Graduate,False,Married,Employed,Kovilpatti,1,True,AAY,True,Kutcha,Chronic Illness,True,True,True
+CIT10443,59,Male,125736,Agricultural Laborer,0.0,2,Illiterate,False,Married,Employed,Sundarpuram,2,True,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10444,75,Female,54839,Unemployed,0.0,3,Primary,False,Married,Seasonal,Melur,0,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10445,56,Male,38205,Farmer,0.0,2,Primary,False,Widowed,Seasonal,Keeranur,2,True,NPHH,True,Kutcha,Good,False,False,False
+CIT10446,31,Female,130740,Agricultural Laborer,0.0,3,Illiterate,True,Single,Unemployed,Keeranur,1,True,NPHH,True,Semi-Pucca,Good,False,False,True
+CIT10447,22,Female,73557,Agricultural Laborer,6.65,3,Primary,False,Married,Seasonal,Melur,0,False,PHH,True,Kutcha,Good,True,False,False
+CIT10448,52,Male,35443,Small Business Owner,0.0,3,Primary,False,Married,Self-Employed,Vadapalani,2,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10449,35,Female,40688,Farmer,0.0,2,Secondary,False,Married,Self-Employed,Kovilpatti,2,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10450,26,Other,19268,Unemployed,0.0,2,Primary,False,Married,Employed,Sundarpuram,1,True,AAY,True,Kutcha,Good,False,False,False
+CIT10451,75,Male,37482,Farmer,1.57,2,Secondary,False,Single,Employed,Melur,2,True,None,True,Semi-Pucca,Good,True,True,False
+CIT10452,34,Male,12000,Student,0.16,2,Secondary,False,Married,Self-Employed,Sundarpuram,2,True,PHH,True,Kutcha,Good,False,False,False
+CIT10453,24,Male,57919,Farmer,0.0,4,Illiterate,False,Single,Seasonal,Perur,2,True,PHH,True,Semi-Pucca,Good,False,False,True
+CIT10454,63,Female,120560,Unemployed,0.0,3,Higher Secondary,False,Widowed,Self-Employed,Keeranur,1,True,PHH,True,Pucca,Good,False,True,False
+CIT10455,30,Female,29140,Farmer,2.06,3,Illiterate,False,Widowed,Employed,Keeranur,2,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10456,57,Female,12821,Agricultural Laborer,0.13,3,Higher Secondary,False,Married,Employed,Melur,4,True,AAY,True,Pucca,Good,False,False,False
+CIT10457,59,Male,223255,Farmer,0.0,4,Graduate,False,Married,Self-Employed,Melur,2,True,PHH,True,Semi-Pucca,Chronic Illness,False,False,False
+CIT10458,26,Male,37062,Student,0.2,6,Primary,True,Married,Employed,Perur,0,True,PHH,True,Semi-Pucca,Good,True,False,False
+CIT10459,67,Female,250577,Farmer,0.0,5,Graduate,False,Married,Unemployed,Vadapalani,1,True,AAY,True,Kutcha,Chronic Illness,False,True,True
+CIT10460,44,Male,12000,Student,0.0,4,Higher Secondary,False,Married,Employed,Melur,1,False,AAY,True,Pucca,Disabled,False,False,False
+CIT10461,83,Male,20139,Farmer,0.0,4,Graduate,False,Married,Employed,Keeranur,0,True,PHH,True,Pucca,Good,False,True,False
+CIT10462,22,Female,237418,Unemployed,0.0,4,Secondary,False,Married,Self-Employed,Sundarpuram,3,True,NPHH,False,Kutcha,Chronic Illness,False,False,False
+CIT10463,46,Female,28257,Farmer,0.0,4,Primary,True,Single,Self-Employed,Kovilpatti,0,True,NPHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10464,54,Female,213365,Farmer,0.0,3,Higher Secondary,False,Married,Employed,Chinnamanur,0,False,None,True,Kutcha,Good,False,False,True
+CIT10465,55,Female,96782,Agricultural Laborer,0.18,3,Illiterate,False,Single,Employed,Sundarpuram,3,False,NPHH,True,Semi-Pucca,Minor Ailment,False,False,True
+CIT10466,25,Female,77994,Farmer,0.0,3,Primary,False,Married,Self-Employed,Vadapalani,1,False,NPHH,True,Semi-Pucca,Good,False,False,False
+CIT10467,82,Female,98186,Farmer,0.0,6,Primary,False,Single,Employed,Kovilpatti,0,True,PHH,True,Semi-Pucca,Good,False,True,False
+CIT10468,34,Female,72703,Private Service,0.0,4,Primary,False,Married,Unemployed,Sundarpuram,1,True,PHH,True,Kutcha,Chronic Illness,False,False,True
+CIT10469,62,Male,68405,Retired,9.0,4,Secondary,True,Married,Seasonal,Sundarpuram,1,True,NPHH,True,Pucca,Good,True,True,False
+CIT10470,21,Male,21862,Student,0.07,3,Secondary,False,Divorced,Employed,Perur,0,True,AAY,True,Kutcha,Good,False,False,False
+CIT10471,53,Female,33312,Farmer,0.0,3,Graduate,False,Married,Seasonal,Chinnamanur,4,True,AAY,True,Kutcha,Good,False,False,False
+CIT10472,48,Female,14595,Farmer,0.22,2,Illiterate,False,Married,Employed,Vadapalani,1,True,None,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10473,36,Male,55782,Small Business Owner,0.0,2,Graduate,False,Single,Unemployed,Keeranur,1,True,PHH,True,Kutcha,Chronic Illness,False,False,False
+CIT10474,78,Male,12000,Farmer,0.0,5,Graduate,False,Widowed,Employed,Perur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10475,71,Male,174572,Private Service,0.0,4,Illiterate,False,Married,Seasonal,Kovilpatti,1,True,AAY,True,Kutcha,Minor Ailment,False,True,False
+CIT10476,56,Male,85598,Farmer,7.15,3,Primary,True,Single,Employed,Chinnamanur,0,True,NPHH,True,Semi-Pucca,Good,True,False,True
+CIT10477,36,Female,43990,Retired,0.82,5,Higher Secondary,False,Widowed,Employed,Keeranur,0,True,PHH,True,Pucca,Good,True,False,False
+CIT10478,56,Male,88109,Agricultural Laborer,5.47,3,Secondary,False,Married,Seasonal,Perur,1,True,PHH,True,Pucca,Good,True,False,False
+CIT10479,84,Female,12000,Unemployed,0.0,7,Higher Secondary,False,Divorced,Unemployed,Chinnamanur,2,True,AAY,True,Semi-Pucca,Chronic Illness,False,True,True
+CIT10480,62,Female,37158,Farmer,0.31,3,Secondary,False,Widowed,Unemployed,Vadapalani,0,True,PHH,True,Kutcha,Good,False,True,True
+CIT10481,30,Female,12000,Artisan,0.0,3,Secondary,False,Widowed,Employed,Melur,1,True,AAY,True,Semi-Pucca,Good,False,False,False
+CIT10482,75,Female,61042,Farmer,0.0,3,Illiterate,False,Single,Self-Employed,Melur,2,True,PHH,True,Semi-Pucca,Chronic Illness,False,True,False
+CIT10483,37,Male,39683,Student,0.0,2,Secondary,False,Single,Employed,Kovilpatti,0,True,NPHH,True,Kutcha,Minor Ailment,False,False,False
+CIT10484,78,Female,36251,Unemployed,5.7,2,Illiterate,False,Married,Employed,Melur,0,True,NPHH,True,Kutcha,Good,True,True,True
+CIT10485,56,Male,213171,Farmer,0.0,4,Secondary,False,Married,Unemployed,Perur,0,True,NPHH,True,Kutcha,Good,False,False,True
+CIT10486,18,Male,112496,Agricultural Laborer,1.18,6,Higher Secondary,False,Married,Employed,Kovilpatti,1,False,PHH,True,Pucca,Minor Ailment,True,False,True
+CIT10487,20,Female,59208,Agricultural Laborer,1.91,5,Secondary,False,Married,Seasonal,Keeranur,0,True,AAY,True,Kutcha,Disabled,True,False,True
+CIT10488,79,Male,42924,Farmer,0.0,2,Graduate,False,Married,Seasonal,Vadapalani,1,True,NPHH,True,Pucca,Good,False,True,False
+CIT10489,80,Male,60729,Agricultural Laborer,0.0,4,Secondary,False,Married,Self-Employed,Kovilpatti,1,True,PHH,True,Kutcha,Chronic Illness,False,True,True
+CIT10490,42,Female,12000,Farmer,1.98,2,Secondary,False,Single,Self-Employed,Keeranur,1,True,NPHH,True,Kutcha,Chronic Illness,True,False,True
+CIT10491,73,Male,17034,Agricultural Laborer,0.0,1,Secondary,False,Married,Self-Employed,Kovilpatti,0,True,PHH,True,Semi-Pucca,Minor Ailment,False,True,True
+CIT10492,50,Female,190640,Student,0.0,4,Graduate,False,Married,Employed,Sundarpuram,1,True,PHH,True,Semi-Pucca,Chronic Illness,False,False,True
+CIT10493,55,Male,12000,Small Business Owner,0.0,4,Secondary,False,Married,Self-Employed,Sundarpuram,2,True,PHH,True,Kutcha,Good,False,False,False
+CIT10494,23,Female,32362,Farmer,2.03,2,Illiterate,False,Single,Employed,Kovilpatti,3,False,AAY,True,Kutcha,Good,True,False,False
+CIT10495,75,Female,90225,Artisan,0.13,1,Graduate,False,Married,Employed,Chinnamanur,2,False,PHH,True,Kutcha,Good,False,True,True
+CIT10496,61,Female,113978,Artisan,0.0,8,Secondary,False,Married,Self-Employed,Melur,1,True,NPHH,True,Kutcha,Good,False,True,True
+CIT10497,62,Female,12000,Agricultural Laborer,0.0,1,Illiterate,False,Married,Unemployed,Sundarpuram,1,True,PHH,True,Kutcha,Chronic Illness,False,True,True
+CIT10498,49,Male,94082,Agricultural Laborer,0.4,3,Secondary,False,Single,Seasonal,Chinnamanur,0,False,PHH,True,Pucca,Minor Ailment,True,False,False
+CIT10499,62,Female,12000,Agricultural Laborer,0.37,4,Higher Secondary,False,Married,Employed,Chinnamanur,0,True,None,True,Semi-Pucca,Good,True,True,False
+CIT10500,78,Male,19725,Student,3.85,2,Secondary,False,Married,Self-Employed,Vadapalani,0,True,NPHH,True,Semi-Pucca,Good,True,True,True

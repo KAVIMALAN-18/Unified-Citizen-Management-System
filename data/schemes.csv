@@ -1,0 +1,13 @@
+scheme_id,scheme_name,minimum_age,maximum_age,maximum_income,required_occupation,minimum_land_area,maximum_land_area,requires_disability,requires_farmer,priority_level,required_documents
+SCH001,Senior Citizen Welfare Support Scheme (DEMO),60,120,120000,Any,0.0,5.0,False,False,1,"Aadhaar,Ration_Card,Age_Proof,Bank_Passbook"
+SCH002,Small & Marginal Farmer Assistance Scheme (DEMO),18,75,150000,Farmer,0.1,5.0,False,True,1,"Aadhaar,Land_Patta,Bank_Passbook,Farmer_ID"
+SCH003,Rural Kutcha Housing Upgrade Grant (DEMO),21,80,90000,Any,0.0,2.0,False,False,1,"Aadhaar,Ration_Card,Income_Certificate,House_Photo"
+SCH004,Rural Student Higher Education Scholarship (DEMO),17,25,200000,Student,0.0,10.0,False,False,2,"Aadhaar,Marklist,Income_Certificate,College_ID"
+SCH005,Women Micro-Entrepreneurship Support Scheme (DEMO),20,55,180000,Any,0.0,5.0,False,False,2,"Aadhaar,SHG_Membership,Bank_Passbook,Business_Plan"
+SCH006,Differently-Abled Pension & Care Scheme (DEMO),18,100,150000,Any,0.0,10.0,True,False,1,"Aadhaar,Disability_Certificate,Bank_Passbook"
+SCH007,Village Critical Health Financial Aid (DEMO),18,90,100000,Any,0.0,3.0,False,False,2,"Aadhaar,Medical_Report,Income_Certificate,Bank_Passbook"
+SCH008,Dryland Farmer Well & Irrigation Subsidy (DEMO),21,70,250000,Farmer,1.0,10.0,False,True,2,"Aadhaar,Land_Patta,Adangal_Record,Bank_Passbook"
+SCH009,Ultra Low-Income Family Welfare Support (DEMO),18,80,60000,Any,0.0,1.0,False,False,1,"Aadhaar,AAY_Ration_Card,Income_Certificate"
+SCH010,Rural Artisan Skill Upgrade & Toolkit Grant (DEMO),18,50,160000,Artisan,0.0,2.0,False,False,3,"Aadhaar,Artisan_ID,Bank_Passbook"
+SCH011,Agricultural Mechanization Subsidy (DEMO),21,65,300000,Farmer,2.0,12.0,False,True,3,"Aadhaar,Land_Patta,Quotation,Bank_Passbook"
+SCH012,Senior Citizen Medical Allowance (DEMO),65,120,140000,Any,0.0,5.0,False,False,2,"Aadhaar,Age_Proof,Medical_Prescription,Bank_Passbook"
