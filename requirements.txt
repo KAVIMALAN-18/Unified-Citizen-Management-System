@@ -5,3 +5,5 @@ matplotlib
 seaborn
 shap
 joblib
+psycopg2-binary
+python-dotenv

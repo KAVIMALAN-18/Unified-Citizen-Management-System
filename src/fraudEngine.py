@@ -2,34 +2,206 @@
 Fraud Intelligence Engine Module
 Unified Citizen Management System (UCMS) for Village Administration
 
-Analyzes synthetic application records to detect suspicious patterns and compute rule-based fraud risk scores.
-Evaluates indicators:
- - Duplicate Identity Flag
- - Income Mismatch Flag (Declared vs Verified Profile Income)
- - Land Area Mismatch Flag (Declared vs Verified Land Holding)
- - Multiple Active Scheme Claims Flag
- - Document Deficit Anomalies
- - Rapid Repeated Submissions
+Analyzes application records using a trained Decision Tree model to predict fraud probability,
+risk classification level, and verification requirements.
 """
 
+import os
+import joblib
 import pandas as pd
 import numpy as np
 
 class FraudIntelligenceEngine:
     """
-    Rule-based Fraud Risk Detection and Intelligence Analysis Engine.
+    ML-based Fraud Risk Detection and Intelligence Analysis Engine.
     """
-    def __init__(self, citizens_filepath="data/citizens.csv"):
+    # Configurable Thresholds for Risk Classification
+    RISK_THRESHOLD_LOW = 0.30
+    RISK_THRESHOLD_MEDIUM = 0.70
+
+    # Mapped Verification Requirements
+    VERIFICATION_LOW = "Standard Verification"
+    VERIFICATION_MEDIUM = "Additional Document Verification"
+    VERIFICATION_HIGH = "Enhanced Manual Verification"
+
+    def __init__(self, citizens_filepath="data/citizens.csv", models_dir="models"):
+        # Load citizen database for reference/lookup
         try:
             citizens_df = pd.read_csv(citizens_filepath)
             self.citizen_lookup = citizens_df.set_index("citizen_id").to_dict("index")
         except Exception:
             self.citizen_lookup = {}
 
+        # Load applications database to track historical metrics for custom applications
+        try:
+            self.applications_df = pd.read_csv("data/applications.csv")
+        except Exception:
+            self.applications_df = pd.DataFrame()
+
+        # Load pre-trained model
+        model_path = os.path.join(models_dir, "fraud_model.joblib")
+        if not os.path.exists(model_path):
+            model_path = "models/fraud_model.joblib"  # fallback
+            if not os.path.exists(model_path):
+                model_path = "models/fraud/fraud_model.joblib"
+
+        try:
+            artifact = joblib.load(model_path)
+            self.model = artifact["model"]
+            self.feature_names = artifact["feature_names"]
+        except Exception as e:
+            print(f"Warning: Could not load fraud ML model artifact from '{model_path}': {e}")
+            self.model = None
+            self.feature_names = [
+                "income_deviation_pct", "land_deviation_pct", "application_frequency",
+                "days_since_previous_application", "scheme_claim_count", "benefit_overlap_count",
+                "document_completeness", "citizen_data_consistency", "application_consistency_score",
+                "declared_income", "declared_land_area", "annual_income", "land_area",
+                "document_count", "family_size", "existing_scheme_count", "income_ratio_diff",
+                "land_diff"
+            ]
+
+    def prepare_single_app_features(self, application, citizen_profile):
+        """
+        Assembles and aligns a single row DataFrame matching the training feature space.
+        """
+        app = application.to_dict() if isinstance(application, pd.Series) else dict(application)
+        profile = citizen_profile.to_dict() if isinstance(citizen_profile, pd.Series) else dict(citizen_profile)
+
+        cid = app.get("citizen_id", profile.get("citizen_id", "UNKNOWN"))
+
+        # Base attributes
+        declared_income = float(app.get("declared_income", 0))
+        declared_land_area = float(app.get("declared_land_area", 0.0))
+        document_count = float(app.get("document_count", 0))
+
+        annual_income = float(profile.get("annual_income", profile.get("raw_income", 0)))
+        land_area = float(profile.get("land_area", profile.get("raw_land_area", 0.0)))
+        family_size = float(profile.get("family_size", 1))
+        existing_scheme_count = float(profile.get("existing_scheme_count", 0))
+
+        # 1. income_deviation_pct
+        if "income_deviation_pct" in app:
+            income_deviation_pct = float(app["income_deviation_pct"])
+        else:
+            income_deviation_pct = round(abs(declared_income - annual_income) / float(max(annual_income, 1.0)) * 100.0, 2)
+
+        # 2. land_deviation_pct
+        if "land_deviation_pct" in app:
+            land_deviation_pct = float(app["land_deviation_pct"])
+        else:
+            if land_area > 0:
+                land_deviation_pct = round(abs(declared_land_area - land_area) / float(land_area) * 100.0, 2)
+            else:
+                land_deviation_pct = round(declared_land_area * 100.0, 2) if declared_land_area > 0 else 0.0
+
+        # History extraction for frequency/overlap if applications_df is present
+        c_apps = pd.DataFrame()
+        if not self.applications_df.empty:
+            c_apps = self.applications_df[self.applications_df["citizen_id"] == cid].copy()
+            if not c_apps.empty and "application_date" in c_apps.columns:
+                c_apps["application_date"] = pd.to_datetime(c_apps["application_date"])
+                c_apps = c_apps.sort_values(by="application_date")
+
+        # 3. application_frequency
+        if "application_frequency" in app:
+            application_frequency = float(app["application_frequency"])
+        else:
+            if not c_apps.empty:
+                application_frequency = float(len(c_apps) + 1)
+            else:
+                application_frequency = 1.0
+
+        # 4. days_since_previous_application
+        if "days_since_previous_application" in app:
+            days_since_previous_application = float(app["days_since_previous_application"])
+        else:
+            if not c_apps.empty:
+                app_date = pd.to_datetime(app.get("application_date", pd.Timestamp.now()))
+                last_app_date = c_apps.iloc[-1]["application_date"]
+                days_since_previous_application = float(max(0, (app_date - last_app_date).days))
+            else:
+                days_since_previous_application = -1.0
+
+        # 5. scheme_claim_count
+        if "scheme_claim_count" in app:
+            scheme_claim_count = float(app["scheme_claim_count"])
+        else:
+            if not c_apps.empty:
+                applied_schemes = set(c_apps["scheme_id"].unique())
+                applied_schemes.add(app.get("scheme_id", "SCH000"))
+                scheme_claim_count = float(len(applied_schemes))
+            else:
+                scheme_claim_count = 1.0
+
+        # 6. benefit_overlap_count
+        if "benefit_overlap_count" in app:
+            benefit_overlap_count = float(app["benefit_overlap_count"])
+        else:
+            if not c_apps.empty:
+                benefit_overlap_count = float(len(c_apps["scheme_id"].unique()))
+            else:
+                benefit_overlap_count = 0.0
+
+        # 7. document_completeness
+        if "document_completeness" in app:
+            document_completeness = float(app["document_completeness"])
+        else:
+            document_completeness = round(min(1.0, document_count / 4.0), 2)
+
+        # 8. citizen_data_consistency
+        if "citizen_data_consistency" in app:
+            citizen_data_consistency = float(app["citizen_data_consistency"])
+        else:
+            c_cons = 100.0 - min(45.0, income_deviation_pct * 0.45) - min(45.0, land_deviation_pct * 0.45)
+            citizen_data_consistency = round(max(0.0, min(100.0, c_cons)), 2)
+
+        # 9. application_consistency_score
+        if "application_consistency_score" in app:
+            application_consistency_score = float(app["application_consistency_score"])
+        else:
+            a_cons = (document_completeness * 60.0)
+            if 0 <= days_since_previous_application <= 3:
+                a_cons += 10.0
+            elif days_since_previous_application > 3 or days_since_previous_application == -1:
+                a_cons += 40.0
+            application_consistency_score = round(max(0.0, min(100.0, a_cons)), 2)
+
+        # 10. income_ratio_diff
+        income_ratio_diff = abs(declared_income - annual_income) / (annual_income + 1e-5)
+
+        # 11. land_diff
+        land_diff = abs(declared_land_area - land_area)
+
+        feature_dict = {
+            "income_deviation_pct": income_deviation_pct,
+            "land_deviation_pct": land_deviation_pct,
+            "application_frequency": application_frequency,
+            "days_since_previous_application": days_since_previous_application,
+            "scheme_claim_count": scheme_claim_count,
+            "benefit_overlap_count": benefit_overlap_count,
+            "document_completeness": document_completeness,
+            "citizen_data_consistency": citizen_data_consistency,
+            "application_consistency_score": application_consistency_score,
+            "declared_income": declared_income,
+            "declared_land_area": declared_land_area,
+            "annual_income": annual_income,
+            "land_area": land_area,
+            "document_count": document_count,
+            "family_size": family_size,
+            "existing_scheme_count": existing_scheme_count,
+            "income_ratio_diff": income_ratio_diff,
+            "land_diff": land_diff
+        }
+
+        # Align with feature_names columns
+        df = pd.DataFrame([feature_dict])
+        df = df[self.feature_names]
+        return df
+
     def analyze_application(self, application, citizen_profile=None):
         """
-        Analyzes a single application dictionary or pandas Series and computes fraud risk score (0-100),
-        risk classification level, detected indicators, and explanatory feedback.
+        Analyzes a single application using the loaded ML Decision Tree model.
         """
         if isinstance(application, pd.Series):
             app = application.to_dict()
@@ -47,105 +219,83 @@ class FraudIntelligenceEngine:
         else:
             c_profile = citizen_profile
 
-        risk_score = 0.0
-        indicators = []
-        explanation = []
+        # Prepare features
+        X_df = self.prepare_single_app_features(app, c_profile)
 
-        # -------------------------------------------------------------
-        # 1. DUPLICATE IDENTITY ANOMALY (Max +35 pts)
-        # -------------------------------------------------------------
-        dup_flag = app.get("duplicate_identity_flag", 0)
-        if dup_flag == 1 or dup_flag is True:
-            risk_score += 35.0
-            indicators.append("Duplicate Identity Flag")
-            explanation.append("Multiple applications submitted using identical or near-identical personal identity markers.")
+        # ML Inference
+        if self.model is not None:
+            pred_class_val = self.model.predict(X_df)[0]
+            prediction_label = "FRAUD" if pred_class_val == 1 else "NORMAL"
+            
+            # Determine fraud index from model classes
+            fraud_idx = 1
+            if hasattr(self.model, "classes_"):
+                classes = list(self.model.classes_)
+                if 1 in classes:
+                    fraud_idx = classes.index(1)
+            
+            prob_arr = self.model.predict_proba(X_df)[0]
+            fraud_probability = float(prob_arr[fraud_idx])
+        else:
+            # Fallback if model not loaded
+            fraud_probability = 0.0
+            prediction_label = "NORMAL"
 
-        # -------------------------------------------------------------
-        # 2. INCOME MISMATCH ANOMALY (Max +30 pts)
-        # -------------------------------------------------------------
-        declared_inc = app.get("declared_income", None)
-        actual_inc = c_profile.get("annual_income", c_profile.get("raw_income", None))
-        inc_flag = app.get("income_mismatch_flag", 0)
+        # Validate probability range
+        if fraud_probability is None or np.isnan(fraud_probability) or fraud_probability < 0.0 or fraud_probability > 1.0:
+            raise ValueError(f"Invalid fraud probability computed: {fraud_probability}")
 
-        if inc_flag == 1 or inc_flag is True:
-            risk_score += 30.0
-            indicators.append("Income Mismatch Anomaly")
-            explanation.append(f"Significant discrepancy detected between declared application income (INR {declared_inc:,}) and verified citizen record (INR {actual_inc:,})." if (declared_inc and actual_inc) else "Income mismatch flag triggered.")
-        elif declared_inc is not None and actual_inc is not None and actual_inc > 0:
-            diff_pct = abs(declared_inc - actual_inc) / float(actual_inc)
-            if diff_pct > 0.35: # >35% divergence
-                pts = min(25.0, round(diff_pct * 30.0, 1))
-                risk_score += pts
-                indicators.append("Income Divergence Anomaly")
-                explanation.append(f"Declared income (INR {declared_inc:,}) deviates by {diff_pct*100:.1f}% from verified profile income (INR {actual_inc:,}).")
-
-        # -------------------------------------------------------------
-        # 3. LAND AREA MISMATCH ANOMALY (Max +25 pts)
-        # -------------------------------------------------------------
-        declared_land = app.get("declared_land_area", None)
-        actual_land = c_profile.get("land_area", c_profile.get("raw_land_area", None))
-        land_flag = app.get("land_mismatch_flag", 0)
-
-        if land_flag == 1 or land_flag is True:
-            risk_score += 25.0
-            indicators.append("Land Area Mismatch")
-            explanation.append(f"Declared land area ({declared_land} acres) conflicts with revenue land registry records ({actual_land} acres)." if (declared_land is not None and actual_land is not None) else "Land area mismatch flag triggered.")
-        elif declared_land is not None and actual_land is not None:
-            land_diff = abs(declared_land - actual_land)
-            if land_diff > 1.5:
-                pts = min(20.0, round(land_diff * 5.0, 1))
-                risk_score += pts
-                indicators.append("Land Area Deviation")
-                explanation.append(f"Declared land ({declared_land} acres) differs significantly from revenue record ({actual_land} acres).")
-
-        # -------------------------------------------------------------
-        # 4. MULTIPLE SCHEME OVER-CLAIMING (Max +15 pts)
-        # -------------------------------------------------------------
-        mult_flag = app.get("multiple_scheme_flag", 0)
-        if mult_flag == 1 or mult_flag is True:
-            risk_score += 15.0
-            indicators.append("Multiple Concurrent Scheme Claims")
-            explanation.append("Applicant has simultaneously applied for multiple overlapping or non-combinable government benefit schemes.")
-
-        # -------------------------------------------------------------
-        # 5. DOCUMENT DEFICIT ANOMALY (Max +10 pts)
-        # -------------------------------------------------------------
-        doc_count = app.get("document_count", 4)
-        if doc_count < 2:
-            risk_score += 10.0
-            indicators.append("Severe Document Deficiency")
-            explanation.append(f"Only {doc_count} document(s) uploaded; missing mandatory verification attachments.")
-
-        # Cap score to 100
-        final_score = int(np.round(min(100.0, max(0.0, risk_score))))
-
-        # Determine risk level
-        if final_score <= 30:
+        # Map to Risk Level using configurable thresholds
+        if fraud_probability <= self.RISK_THRESHOLD_LOW:
             risk_level = "LOW"
-        elif final_score <= 60:
+            verification_requirement = self.VERIFICATION_LOW
+            explanation_text = "The application shows standard characteristics consistent with a low-risk profile."
+        elif fraud_probability <= self.RISK_THRESHOLD_MEDIUM:
             risk_level = "MEDIUM"
+            verification_requirement = self.VERIFICATION_MEDIUM
+            explanation_text = "The model detected anomalies requiring additional document verification."
         else:
             risk_level = "HIGH"
+            verification_requirement = self.VERIFICATION_HIGH
+            explanation_text = "Critical pattern matches detected by the ML classifier. Immediate enhanced field audit required."
 
-        if not indicators:
-            explanation.append("Application passes standard fraud intelligence checks with clean records.")
+        # Aggregate key indicators for explainability support (e.g. deviations)
+        indicators = []
+        inc_dev = X_df.loc[0, "income_deviation_pct"]
+        land_dev = X_df.loc[0, "land_deviation_pct"]
+        doc_completeness = X_df.loc[0, "document_completeness"]
 
+        if inc_dev > 30.0:
+            indicators.append("Significant Income Mismatch Anomaly")
+        if land_dev > 35.0:
+            indicators.append("Revenue Land Mismatch Anomaly")
+        if doc_completeness < 0.6:
+            indicators.append("Document Completeness Deficiency")
+
+        # Compile result dictionary
         return {
             "application_id": app_id,
             "citizen_id": cid,
-            "risk_score": final_score,
             "risk_level": risk_level,
+            "verification_requirement": verification_requirement,
+            "prediction": prediction_label,
+            "fraud_probability": round(fraud_probability, 4),
             "indicators": indicators,
-            "explanation": explanation
+            "explanation": [explanation_text],
+            "feature_vector": X_df
         }
 
     def analyze_dataset(self, applications_df):
         """
         Processes a dataset of applications and appends fraud scores and risk categories.
         """
-        results = [self.analyze_application(row) for _, row in applications_df.iterrows()]
-        res_df = pd.DataFrame(results)
-        return res_df
+        results = []
+        for _, row in applications_df.iterrows():
+            cid = row["citizen_id"]
+            c_profile = self.citizen_lookup.get(cid, {})
+            res = self.analyze_application(row, c_profile)
+            results.append(res)
+        return pd.DataFrame(results)
 
 if __name__ == "__main__":
     # Test execution
@@ -154,29 +304,23 @@ if __name__ == "__main__":
         "citizen_id": "CIT10001",
         "declared_income": 20000,
         "declared_land_area": 5.5,
-        "document_count": 1,
-        "duplicate_identity_flag": 1,
-        "income_mismatch_flag": 1,
-        "land_mismatch_flag": 1,
-        "multiple_scheme_flag": 0
+        "document_count": 1
     }
 
     sample_citizen = {
         "citizen_id": "CIT10001",
         "annual_income": 85000,
-        "land_area": 0.5
+        "land_area": 0.5,
+        "family_size": 4,
+        "existing_scheme_count": 1
     }
 
     engine = FraudIntelligenceEngine()
     analysis = engine.analyze_application(sample_app, sample_citizen)
 
-    print("\nFraud Intelligence Engine Analysis Result:")
+    print("\nML Fraud Engine Analysis Result:")
     print(f"Application ID : {analysis['application_id']}")
-    print(f"Risk Score     : {analysis['risk_score']}/100")
+    print(f"Prediction     : {analysis['prediction']}")
+    print(f"Probability    : {analysis['fraud_probability']:.4f}")
     print(f"Risk Level     : {analysis['risk_level']}")
-    print("Indicators     :")
-    for ind in analysis['indicators']:
-        print(f"  - {ind}")
-    print("Explanation    :")
-    for exp in analysis['explanation']:
-        print(f"  - {exp}")
+    print(f"Verification   : {analysis['verification_requirement']}")

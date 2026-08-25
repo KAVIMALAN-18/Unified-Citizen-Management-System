@@ -99,9 +99,9 @@ def run_pipeline(citizen_id=None, app_id=None, data_dir="data"):
     fraud_assessment = fraud_engine.analyze_application(app_row, citizen_row)
 
     print(f"Application ID     : {fraud_assessment['application_id']}")
-    print(f"Fraud Risk Score   : {fraud_assessment['risk_score']}/100")
     print(f"Risk Level Category: {fraud_assessment['risk_level']}")
-    print(f"Flagged Indicators : {', '.join(fraud_assessment['indicators']) if fraud_assessment['indicators'] else 'None'}")
+    print(f"Verification Req.  : {fraud_assessment['verification_requirement']}")
+    print(f"Fraud Probability  : {fraud_assessment['fraud_probability']:.4f} ({fraud_assessment['fraud_probability']*100:.1f}%)")
 
     # -------------------------------------------------------------------------
     # NOVELTY COMPONENT 4: EXPLAINABLE AI LAYER (XAI)
@@ -111,10 +111,65 @@ def run_pipeline(citizen_id=None, app_id=None, data_dir="data"):
     print("--------------------------------------------------------------------------")
     xai = ExplainableAILayer()
     rec_explanation = xai.explain_recommendation(top_recommendation, enriched_profile)
-    fraud_explanation = xai.explain_fraud_assessment(fraud_assessment, app_row)
+    fraud_explanation = xai.explain_fraud_assessment(fraud_assessment, app_row, model=fraud_engine.model, feature_names=fraud_engine.feature_names)
 
     report_text = xai.format_console_output(rec_explanation, fraud_explanation)
     print(report_text)
+
+    # -------------------------------------------------------------------------
+    # FINAL UCMS AI AUDIT REPORT
+    # -------------------------------------------------------------------------
+    print("\n--------------------------------------------")
+    print("UCMS AI AUDIT REPORT")
+    print("--------------------------------------------")
+    print(f"Citizen ID:\n{citizen_id}")
+    print(f"\nCitizen Profile:")
+    print(f"  Age: {enriched_profile['raw_age']} ({enriched_profile['age_group']})")
+    print(f"  Income: INR {enriched_profile['raw_income']:,} ({enriched_profile['income_category']})")
+    print(f"  Occupation: {enriched_profile['raw_occupation']}")
+    print(f"  Land Area: {enriched_profile['raw_land_area']} acres ({enriched_profile['land_category']})")
+    print(f"  Vulnerability Score: {enriched_profile['vulnerability_score']}/100")
+    print(f"  Document Readiness: {enriched_profile['document_readiness']}%")
+    
+    print(f"\nRecommended Schemes:")
+    for idx, rec in enumerate(recommendations, 1):
+        status = "Eligible" if rec['eligible'] else "Ineligible"
+        print(f"  {idx}. [{rec['scheme_id']}] {rec['scheme_name']} - Score: {rec['score']}/100 ({status})")
+        if rec['missing_documents']:
+            print(f"     Missing: {', '.join(rec['missing_documents'])}")
+            
+    print(f"\nApplication:")
+    print(f"  Application ID: {app_row['application_id']}")
+    print(f"  Applied Scheme: {app_row['scheme_id']}")
+    print(f"  Declared Income: INR {app_row['declared_income']:,}")
+    print(f"  Declared Land Area: {app_row['declared_land_area']} acres")
+    print(f"  Uploaded Document Count: {app_row['document_count']}")
+    
+    print(f"\nFraud Prediction:\n{fraud_assessment['prediction']}")
+    print(f"\nFraud Probability:\n{fraud_assessment['fraud_probability'] * 100:.2f}%")
+    print(f"\nRisk Level:\n{fraud_assessment['risk_level']}")
+    
+    # Map verification requirements to clean matching upper case
+    v_req_upper = fraud_assessment['verification_requirement'].upper()
+    print(f"\nVerification Requirement:\n{v_req_upper}")
+    
+    print(f"\nSHAP Factors:")
+    if fraud_explanation.get("shap_available", False):
+        for idx, f in enumerate(fraud_explanation["top_shap_factors"], 1):
+            sign = "+" if f['shap_value'] >= 0 else ""
+            print(f"  - {f['feature']} (Observed: {f['observed_value']:.2f}, SHAP: {sign}{f['shap_value']:.4f})")
+    else:
+        print("  - SHAP factors not calculated.")
+        
+    print(f"\nAI Explanation:\n{fraud_explanation['human_readable_explanation']}")
+    print("\nFinal Status:\nPENDING OFFICER REVIEW")
+    print("--------------------------------------------")
+    print("\nDisclaimer:")
+    print("The AI system provides decision support only. The fraud-risk")
+    print("prediction and verification recommendation do not constitute")
+    print("an automatic approval or rejection. The final decision remains")
+    print("with the authorized officer.")
+    print("--------------------------------------------")
 
     print("\n[SUCCESS] AI pipeline completed end-to-end execution.")
 

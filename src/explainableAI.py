@@ -47,29 +47,64 @@ class ExplainableAILayer:
 
         return explanation
 
-    def explain_fraud_assessment(self, fraud_result, application_data):
+    def explain_fraud_assessment(self, fraud_result, application_data, model=None, feature_names=None):
         """
-        Generates structured audit trail explanation for a fraud intelligence evaluation.
+        Generates structured audit trail explanation for a fraud intelligence evaluation,
+        integrating local SHAP attributions if a model and feature names are provided.
         """
         app_id = fraud_result.get("application_id", "Unknown")
-        risk_score = fraud_result.get("risk_score", 0)
         risk_level = fraud_result.get("risk_level", "LOW")
+        verification_requirement = fraud_result.get("verification_requirement", "Standard Verification")
+        fraud_prob = fraud_result.get("fraud_probability", 0.0)
         indicators = fraud_result.get("indicators", [])
-        explanations = fraud_result.get("explanation", [])
 
-        if risk_level == "HIGH":
-            recommendation = "FLAG FOR IMMEDIATE MANUAL AUDIT - Withhold scheme approval pending field verification."
-        elif risk_level == "MEDIUM":
-            recommendation = "REQUIRES DOCUMENT RE-VERIFICATION - Contact applicant to resolve income/land disclosures."
-        else:
-            recommendation = "AUTOMATED ROUTING PERMITTED - Low risk profile detected."
+        # Get SHAP explanation if model and feature_names are provided
+        shap_factors = []
+        human_explanation = ""
+        shap_available = False
+
+        if model is not None and feature_names is not None and "feature_vector" in fraud_result:
+            X_df = fraud_result["feature_vector"]
+            shap_res = self.explain_ml_fraud_prediction(model, X_df, feature_names)
+            if shap_res.get("shap_available", False):
+                shap_factors = shap_res.get("top_shap_factors", [])
+                shap_available = True
+                
+                # Build human-readable explanation based on actual SHAP factors
+                if shap_factors:
+                    contributing_features = []
+                    reducing_features = []
+                    for f in shap_factors:
+                        if f["shap_value"] > 0:
+                            contributing_features.append(f["feature"])
+                        else:
+                            reducing_features.append(f["feature"])
+                    
+                    explanation_sentences = []
+                    if contributing_features:
+                        explanation_sentences.append(f"The strongest factors contributing toward a higher fraud prediction were: {', '.join(contributing_features)}.")
+                    if reducing_features:
+                        explanation_sentences.append(f"Features indicating a lower fraud risk included: {', '.join(reducing_features)}.")
+                    
+                    human_explanation = " ".join(explanation_sentences)
+                else:
+                    human_explanation = "No significant features contributed to the fraud prediction."
+
+        if not human_explanation:
+            human_explanation = f"The model assigned a {risk_level.lower()} fraud probability of {fraud_prob*100:.1f}%. The verification recommendation is {verification_requirement}."
 
         explanation = {
             "summary_title": f"Fraud Intelligence Audit for Application #{app_id}",
-            "risk_assessment": f"{risk_level} RISK ({risk_score}/100)",
+            "risk_assessment": f"{risk_level} RISK (Probability: {fraud_prob:.4f})",
+            "risk_level": risk_level,
+            "fraud_probability": fraud_prob,
+            "verification_requirement": verification_requirement,
             "flagged_indicators": indicators if indicators else ["None (Clean Application)"],
-            "feature_level_explanations": explanations,
-            "administrative_recommendation": recommendation
+            "feature_level_explanations": fraud_result.get("explanation", []),
+            "top_shap_factors": shap_factors,
+            "human_readable_explanation": human_explanation,
+            "shap_available": shap_available,
+            "administrative_recommendation": f"{verification_requirement} - Review required."
         }
 
         return explanation
@@ -83,7 +118,7 @@ class ExplainableAILayer:
 
             abs_vals = np.abs(shap_values_vector)
             top_idx = np.argsort(abs_vals)[::-1][:5]
-
+  
             top_names = [feature_names[i] for i in top_idx][::-1]
             top_vals = [float(shap_values_vector[i]) for i in top_idx][::-1]
 
@@ -106,27 +141,26 @@ class ExplainableAILayer:
     def explain_ml_fraud_prediction(self, model, feature_vector, feature_names):
         """
         Computes local SHAP feature attributions for a single ML fraud prediction using TreeExplainer.
-        Handles multiple SHAP output dimensions and formats robustly.
+        Handles multiple input types (Series, DataFrame, 1D/2D arrays, lists) and SHAP output formats.
         """
         try:
-            # Prepare feature vector as 2D numpy array
+            # Safely prepare feature vector as 2D numpy array and DataFrame with feature names
             if isinstance(feature_vector, pd.DataFrame):
-                X = feature_vector[feature_names].values
+                X_df = feature_vector[feature_names]
+                X = X_df.values
             elif isinstance(feature_vector, pd.Series):
-                X = feature_vector[feature_names].values.reshape(1, -1)
-            elif isinstance(feature_vector, list):
+                X_df = pd.DataFrame([feature_vector[feature_names]])
+                X = X_df.values
+            elif isinstance(feature_vector, (list, np.ndarray)):
                 arr = np.array(feature_vector)
                 X = arr.reshape(1, -1) if arr.ndim == 1 else arr
-            elif isinstance(feature_vector, np.ndarray):
-                X = feature_vector.reshape(1, -1) if feature_vector.ndim == 1 else feature_vector
+                X_df = pd.DataFrame(X, columns=feature_names)
             else:
                 X = np.array(feature_vector).reshape(1, -1)
+                X_df = pd.DataFrame(X, columns=feature_names)
 
             if X.shape[1] != len(feature_names):
                 raise ValueError(f"Feature vector size ({X.shape[1]}) does not match feature_names length ({len(feature_names)})")
-
-            # Convert to DataFrame with feature_names to align with fitted model
-            X_df = pd.DataFrame(X, columns=feature_names)
 
             # 1. Compute prediction & probabilities
             pred_class_idx = int(model.predict(X_df)[0])
@@ -236,13 +270,27 @@ class ExplainableAILayer:
     def explain_ml_fraud_model(self, model, feature_vector, feature_names, shap_explainer=None):
         """
         Provides ML-specific feature importance explanation using global feature importances and local SHAP.
-        Maintains backward compatibility.
+        Maintains backward compatibility across all input types (Series, DataFrame, 1D/2D arrays, lists).
         """
         explanation = {}
         try:
-            fv_df = pd.DataFrame(feature_vector, columns=feature_names) if not isinstance(feature_vector, pd.DataFrame) else feature_vector
+            # Safely format feature_vector into 2D DataFrame and 2D array
+            if isinstance(feature_vector, pd.DataFrame):
+                X_df = feature_vector[feature_names]
+                X_arr = X_df.values
+            elif isinstance(feature_vector, pd.Series):
+                X_df = pd.DataFrame([feature_vector[feature_names]])
+                X_arr = X_df.values
+            elif isinstance(feature_vector, (list, np.ndarray)):
+                arr = np.array(feature_vector)
+                X_arr = arr.reshape(1, -1) if arr.ndim == 1 else arr
+                X_df = pd.DataFrame(X_arr, columns=feature_names)
+            else:
+                X_arr = np.array(feature_vector).reshape(1, -1)
+                X_df = pd.DataFrame(X_arr, columns=feature_names)
+
             if hasattr(model, "predict_proba"):
-                prob = model.predict_proba(fv_df)[0][1]
+                prob = model.predict_proba(X_df)[0][1]
                 explanation["ml_fraud_probability"] = f"{prob * 100:.1f}%"
 
             if hasattr(model, "feature_importances_"):
@@ -251,16 +299,16 @@ class ExplainableAILayer:
                 top_features = []
                 for idx in top_idx[:5]:
                     if importances[idx] > 0.001:
-                        val = feature_vector[0][idx] if isinstance(feature_vector, (list, np.ndarray)) else "N/A"
+                        val = float(X_arr[0, idx])
                         top_features.append({
                             "feature": feature_names[idx],
                             "importance_weight": round(float(importances[idx]), 4),
-                            "observed_value": val
+                            "observed_value": round(val, 4)
                         })
                 explanation["top_predictive_features"] = top_features
 
             # Execute SHAP explanation
-            shap_res = self.explain_ml_fraud_prediction(model, feature_vector, feature_names)
+            shap_res = self.explain_ml_fraud_prediction(model, X_df, feature_names)
             if shap_res.get("shap_available", False):
                 explanation["shap_values_summary"] = "SHAP feature attribution computed successfully."
                 explanation["top_shap_factors"] = shap_res.get("top_shap_factors", [])
@@ -288,16 +336,30 @@ class ExplainableAILayer:
         for act in rec_exp['actionable_requirements']:
             lines.append(f"  -> {act}")
 
-        lines.append(f"\n[FRAUD AUDIT EXPLANATION]")
+        lines.append(f"\n[ML FRAUD AUDIT EXPLANATION]")
         lines.append(f"Report        : {fraud_exp['summary_title']}")
-        lines.append(f"Assessment    : {fraud_exp['risk_assessment']}")
-        lines.append("Flagged Indicators:")
-        for ind in fraud_exp['flagged_indicators']:
-            lines.append(f"  ! {ind}")
-        lines.append("Detailed Feature Evidence:")
-        for exp in fraud_exp['feature_level_explanations']:
-            lines.append(f"  - {exp}")
-        lines.append(f"Admin Action  : {fraud_exp['administrative_recommendation']}")
+        lines.append(f"Probability   : {fraud_exp['fraud_probability']:.4f} ({fraud_exp['fraud_probability']*100:.1f}%)")
+        lines.append(f"Risk Level    : {fraud_exp['risk_level']}")
+        lines.append(f"Verification  : {fraud_exp['verification_requirement']}")
+        
+        if fraud_exp.get("shap_available", False):
+            lines.append("\nTop SHAP Factors:")
+            for idx, factor in enumerate(fraud_exp["top_shap_factors"], 1):
+                sign = "+" if factor['shap_value'] >= 0 else ""
+                lines.append(f"  {idx}. {factor['feature']}")
+                lines.append(f"     Observed Value: {factor['observed_value']:.4f}")
+                lines.append(f"     SHAP Value    : {sign}{factor['shap_value']:.4f}")
+            lines.append(f"\nHuman-readable Explanation:")
+            lines.append(f"  {fraud_exp['human_readable_explanation']}")
+        else:
+            lines.append("Flagged Indicators:")
+            for ind in fraud_exp['flagged_indicators']:
+                lines.append(f"  ! {ind}")
+            lines.append("Detailed Feature Evidence:")
+            for exp in fraud_exp['feature_level_explanations']:
+                lines.append(f"  - {exp}")
+                
+        lines.append(f"\nAdmin Action  : {fraud_exp['administrative_recommendation']}")
         lines.append("==========================================================================")
         return "\n".join(lines)
 
@@ -348,6 +410,9 @@ if __name__ == "__main__":
 
     # 2. Machine Learning SHAP Demonstration
     model_path = "models/fraud_model.joblib"
+    if not os.path.exists(model_path):
+        model_path = "models/fraud/fraud_model.joblib"
+
     if os.path.exists(model_path):
         try:
             artifact = joblib.load(model_path)
@@ -358,7 +423,6 @@ if __name__ == "__main__":
             print("ML EXPLAINABLE AI")
             print("==================================================")
 
-            # Sample synthetic feature vector matching trained model feature_names
             apps_df = pd.read_csv("data/applications.csv")
             citizens_df = pd.read_csv("data/citizens.csv")
             merged = apps_df.merge(citizens_df, on="citizen_id", how="left")
