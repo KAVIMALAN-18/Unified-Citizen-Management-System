@@ -50,9 +50,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ExceptionHandler(org.springframework.web.client.RestClientException.class)
+    public ResponseEntity<ApiResponse> handleRestClientException(org.springframework.web.client.RestClientException ex) {
+        ApiResponse response = ApiResponse.error("FastAPI AI Service is unreachable on port 8000. Please start the Python AI microservice (uvicorn api.main:app --port 8000).");
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGeneralException(Exception ex) {
-        ApiResponse response = ApiResponse.error("An unexpected error occurred");
+        String msg = ex.getMessage() != null && !ex.getMessage().isBlank() ? ex.getMessage() : "An unexpected error occurred";
+        ApiResponse response = ApiResponse.error(msg);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

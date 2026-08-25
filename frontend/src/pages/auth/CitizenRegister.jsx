@@ -8,8 +8,9 @@ export const CitizenRegister = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phoneNumber: '',
+    phoneNumber: '9876543210',
     password: '',
+    confirmPassword: '',
     dateOfBirth: '1990-01-01',
     gender: 'MALE',
     address: '123 Main Street',
@@ -36,14 +37,40 @@ export const CitizenRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    // Client-side validations
+    if (formData.password.length < 8) {
+      setError('Password must contain at least 8 characters.');
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Password and Confirm Password do not match.');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await authService.registerCitizen(formData);
+      const payload = {
+        ...formData,
+        annualIncome: parseFloat(formData.annualIncome) || 0,
+        landArea: parseFloat(formData.landArea) || 0,
+      };
+
+      const res = await authService.registerCitizen(payload);
       login(res.token, res.citizen);
       navigate('/citizen/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Check details.');
+      const responseData = err.response?.data;
+      if (responseData?.errors && typeof responseData.errors === 'object') {
+        const errorMessages = Object.entries(responseData.errors)
+          .map(([field, msg]) => `${field}: ${msg}`)
+          .join(' | ');
+        setError(`Validation Failed: ${errorMessages}`);
+      } else {
+        setError(responseData?.message || 'Registration failed. Check your input details.');
+      }
     } finally {
       setLoading(false);
     }
@@ -57,27 +84,74 @@ export const CitizenRegister = () => {
         <p style={{ color: 'var(--slate-500)', fontSize: '0.85rem' }}>Register to access village welfare schemes and services</p>
       </div>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className="alert alert-danger" style={{ fontSize: '0.85rem' }}>{error}</div>}
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="form-label">Full Name</label>
-          <input type="text" className="form-control" name="fullName" value={formData.fullName} onChange={handleChange} required />
+          <input
+            type="text"
+            className="form-control"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            placeholder="e.g. John Doe"
+            required
+          />
         </div>
 
         <div className="form-group">
           <label className="form-label">Email Address</label>
-          <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} required />
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="e.g. citizen@ucms.gov.in"
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label className="form-label">Phone Number</label>
-          <input type="text" className="form-control" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+          <label className="form-label">Phone Number (10 digits)</label>
+          <input
+            type="text"
+            className="form-control"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+            placeholder="e.g. 9876543210"
+            required
+          />
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Password</label>
-          <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} required />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div className="form-group">
+            <label className="form-label">Password (Min 8 Chars)</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="••••••••"
+              required
+            />
+          </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>

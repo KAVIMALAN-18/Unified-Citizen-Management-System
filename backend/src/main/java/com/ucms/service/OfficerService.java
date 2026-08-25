@@ -90,6 +90,9 @@ public class OfficerService {
                 .orElseThrow(() -> new IllegalArgumentException("Application not found with id: " + applicationId));
 
         Citizen citizen = app.getCitizen();
+        if (citizen == null) {
+            throw new IllegalArgumentException("Application ID " + applicationId + " does not have an associated citizen profile.");
+        }
 
         // Build AiAnalysisRequest
         AiAnalysisRequest.CitizenInfo cInfo = new AiAnalysisRequest.CitizenInfo();

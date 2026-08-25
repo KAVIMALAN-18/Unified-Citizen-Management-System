@@ -22,7 +22,13 @@ export const CitizenLogin = () => {
       login(res.token, res.citizen);
       navigate('/citizen/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid email or password');
+      const data = err.response?.data;
+      if (data?.errors && typeof data.errors === 'object') {
+        const msg = Object.entries(data.errors).map(([f, m]) => `${f}: ${m}`).join(' | ');
+        setError(`Validation Failed: ${msg}`);
+      } else {
+        setError(data?.message || 'Invalid email or password');
+      }
     } finally {
       setLoading(false);
     }
