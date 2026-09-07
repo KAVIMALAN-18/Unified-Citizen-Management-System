@@ -79,7 +79,7 @@ export const OfficerDashboard = () => {
               <FileText className="text-primary-600" /> Scheme Applications & AI Review
             </h3>
             <p style={{ fontSize: '0.85rem', color: 'var(--slate-600)' }}>
-              Inspect applications, trigger Decision Tree ML fraud evaluation, examine SHAP explanations, and make approval decisions.
+              Inspect applications, trigger Random Forest ML fraud evaluation, examine SHAP explanations, and make approval decisions.
             </p>
           </div>
           <Link to="/officer/applications" className="btn btn-primary btn-sm" style={{ marginTop: '1rem' }}>

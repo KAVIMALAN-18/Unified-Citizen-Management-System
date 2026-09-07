@@ -180,8 +180,10 @@ def run_unified_ai_pipeline(app_id="APP10001", data_dir="data", models_dir="mode
     print("\n------------------------------------------------------------")
     print("FRAUD INTELLIGENCE")
     print("------------------------------------------------------------")
-    print(f"Rule-Based Risk Score : {rule_fraud_res['risk_score']}/100")
-    print(f"Risk Level            : {rule_fraud_res['risk_level']}")
+    risk_score_val = rule_fraud_res.get('risk_score', round(rule_fraud_res.get('fraud_probability', 0.0) * 100, 1))
+    print(f"Rule-Based Risk Score : {risk_score_val}/100")
+    print(f"Risk Level            : {rule_fraud_res.get('risk_level', 'LOW')}")
+
     print("\nDetected Indicators:")
     if rule_fraud_res.get("indicators"):
         for ind in rule_fraud_res["indicators"]:

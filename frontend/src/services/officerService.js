@@ -75,4 +75,9 @@ export const officerService = {
     const response = await api.post('/api/officer/budget', data);
     return response.data;
   },
+
+  getAiAnalysis: async (id) => {
+    const response = await api.get(`/api/officer/applications/${id}/ai-analysis`);
+    return response.data;
+  },
 };

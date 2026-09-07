@@ -207,7 +207,7 @@ class ExplainableAILayer:
                 pass
 
             if shap_vals_vec is None:
-                sv = explainer.shap_values(X)
+                sv = explainer.shap_values(X, check_additivity=False)
                 if isinstance(sv, list):
                     vals = sv[1] if len(sv) > 1 else sv[0]
                     shap_vals_vec = vals[0] if vals.ndim == 2 else vals

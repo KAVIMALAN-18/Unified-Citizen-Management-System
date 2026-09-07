@@ -55,7 +55,7 @@ export const OfficerApplications = () => {
       <div style={{ marginBottom: '1.5rem' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--slate-900)' }}>Applications Review & AI Verification</h2>
         <p style={{ color: 'var(--slate-500)', fontSize: '0.9rem' }}>
-          Evaluate submitted welfare scheme applications using Decision Tree ML predictions and dynamic SHAP feature attributions.
+          Evaluate submitted welfare scheme applications using Random Forest ML predictions and dynamic SHAP feature attributions.
         </p>
       </div>
 

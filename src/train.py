@@ -2,7 +2,7 @@
 Machine Learning Model Training Module — Baseline Fraud Classifier
 Unified Citizen Management System (UCMS) for Village Administration
 
-Trains a baseline interpretable Machine Learning classifier (DecisionTreeClassifier)
+Trains a baseline interpretable Machine Learning classifier (RandomForestClassifier)
 on synthetic scheme application data to predict synthetic fraud ground-truth labels.
 Implements group-aware citizen-level splits (GroupShuffleSplit) to prevent citizen leakage
 and trains exclusively on underlying observable behavioral and demographic features.
@@ -23,10 +23,14 @@ import joblib
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+try:
+    import seaborn as sns
+except ImportError:
+    sns = None
+
 
 from sklearn.model_selection import GroupShuffleSplit
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -106,7 +110,7 @@ def validate_anti_leakage(feature_names, train_citizens, test_citizens):
 
 def train_fraud_model(data_dir="data", models_dir="models", random_state=42):
     """
-    Trains and evaluates the baseline DecisionTreeClassifier fraud model using group-aware splitting.
+    Trains and evaluates the baseline RandomForestClassifier fraud model using group-aware splitting.
     """
     os.makedirs(models_dir, exist_ok=True)
 
@@ -152,8 +156,9 @@ def train_fraud_model(data_dir="data", models_dir="models", random_state=42):
     for f in feature_names:
         print(f" - {f}")
 
-    # 2. MODEL TRAINING (Interpretable DecisionTree with class balance)
-    clf = DecisionTreeClassifier(
+    # 2. MODEL TRAINING (RandomForest with class balance)
+    clf = RandomForestClassifier(
+        n_estimators=100,
         max_depth=5,
         min_samples_split=4,
         class_weight="balanced",
@@ -214,7 +219,7 @@ def train_fraud_model(data_dir="data", models_dir="models", random_state=42):
     plt.barh(fi_df["Feature"][::-1], fi_df["Importance"][::-1])
     plt.xlabel("Importance")
     plt.ylabel("Feature")
-    plt.title("Decision Tree Feature Importance")
+    plt.title("Random Forest Feature Importance")
     plt.tight_layout()
     fi_png_path = os.path.join(models_dir, "feature_importance.png")
     plt.savefig(fi_png_path)
@@ -249,14 +254,14 @@ def train_fraud_model(data_dir="data", models_dir="models", random_state=42):
     model_artifact = {
         "model": clf,
         "feature_names": feature_names,
-        "model_type": "DecisionTreeClassifier",
+        "model_type": "RandomForestClassifier",
         "random_state": random_state
     }
     model_path = os.path.join(models_dir, "fraud_model.joblib")
     joblib.dump(model_artifact, model_path)
 
     metadata = {
-        "model_type": "DecisionTreeClassifier",
+        "model_type": "RandomForestClassifier",
         "description": "Baseline ML fraud classifier trained and evaluated on synthetic UCMS application data.",
         "random_state": random_state,
         "total_applications": int(len(X)),

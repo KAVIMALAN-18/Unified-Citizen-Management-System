@@ -83,6 +83,8 @@ def analyze(request: AnalyzeRequest):
             detail=f"Invalid Request Attributes: {str(ve)}"
         )
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         # Prevent exposing raw internal python stack traces to clients
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

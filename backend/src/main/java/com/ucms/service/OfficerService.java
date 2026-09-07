@@ -129,8 +129,13 @@ public class OfficerService {
 
         AiAnalysisRequest request = new AiAnalysisRequest(cInfo, aInfo);
 
-        // Invoke FastAPI via AiService
-        AiAnalysisResponse response = aiService.analyze(request);
+        // Invoke FastAPI via AiService with local fallback if offline
+        AiAnalysisResponse response;
+        try {
+            response = aiService.analyze(request);
+        } catch (Exception e) {
+            response = calculateLocalFallbackFraudAnalysis(citizen, app);
+        }
 
         // Store or update AiAnalysis record
         AiAnalysis aiRecord = aiAnalysisRepository.findByApplicationId(app.getId()).orElse(new AiAnalysis());
@@ -158,6 +163,46 @@ public class OfficerService {
 
         return response;
     }
+
+    private AiAnalysisResponse calculateLocalFallbackFraudAnalysis(Citizen citizen, Application app) {
+        double declaredInc = app.getDeclaredIncome() != null ? app.getDeclaredIncome().doubleValue() : 0.0;
+        double actualInc = citizen.getAnnualIncome() != null ? citizen.getAnnualIncome().doubleValue() : 75000.0;
+        double incDevPct = Math.abs(declaredInc - actualInc) / Math.max(actualInc, 1.0) * 100.0;
+
+        double declaredLand = app.getDeclaredLandArea() != null ? app.getDeclaredLandArea().doubleValue() : 0.0;
+        double actualLand = citizen.getLandArea() != null ? citizen.getLandArea().doubleValue() : 0.0;
+        double landDevPct = actualLand > 0 ? Math.abs(declaredLand - actualLand) / actualLand * 100.0 : (declaredLand > 0 ? declaredLand * 100.0 : 0.0);
+
+        int docCount = app.getDocumentCount() != null ? app.getDocumentCount() : 0;
+        double docCompleteness = Math.min(1.0, docCount / 4.0);
+
+        double fraudProb = Math.min(1.0, (incDevPct * 0.4 + landDevPct * 0.4 + (1.0 - docCompleteness) * 20.0) / 100.0);
+        fraudProb = Math.round(fraudProb * 10000.0) / 10000.0;
+
+        String prediction = fraudProb >= 0.5 ? "FRAUD" : "NORMAL";
+        String riskLevel = fraudProb <= 0.30 ? "LOW" : (fraudProb <= 0.70 ? "MEDIUM" : "HIGH");
+        String verification = fraudProb <= 0.30 ? "Standard Verification" : (fraudProb <= 0.70 ? "Additional Document Verification" : "Enhanced Manual Verification");
+
+        AiAnalysisResponse res = new AiAnalysisResponse();
+        res.setCitizen_id(citizen.getEmail());
+        res.setApplication_id(app.getApplicationId());
+        res.setFinal_status("PENDING_OFFICER_REVIEW");
+        res.setOfficer_decision_required(true);
+
+        AiAnalysisResponse.FraudAnalysisOutput fraud = new AiAnalysisResponse.FraudAnalysisOutput();
+        fraud.setPrediction(prediction);
+        fraud.setFraud_probability(fraudProb);
+        fraud.setRisk_level(riskLevel);
+        fraud.setVerification_requirement(verification);
+        res.setFraud_analysis(fraud);
+
+        AiAnalysisResponse.ExplanationOutput exp = new AiAnalysisResponse.ExplanationOutput();
+        exp.setHuman_readable_explanation("Local Rule Engine Assessment: Income mismatch deviation is " + String.format("%.1f", incDevPct) + "% and land area mismatch deviation is " + String.format("%.1f", landDevPct) + "%. Recommended Verification: " + verification + ".");
+        res.setExplanation(exp);
+
+        return res;
+    }
+
 
     @Transactional
     public ApplicationDto reviewApplication(Long applicationId, OfficerReviewRequest reviewRequest) {
@@ -326,5 +371,41 @@ public class OfficerService {
 
         Budget saved = budgetRepository.save(b);
         return BudgetDto.fromEntity(saved);
+    }
+
+    @Transactional(readOnly = true)
+    public AiAnalysisResponse getAiAnalysis(Long applicationId) {
+        Application app = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found with id: " + applicationId));
+
+        AiAnalysis aiRecord = aiAnalysisRepository.findByApplicationId(app.getId())
+                .orElseThrow(() -> new IllegalArgumentException("AI analysis not found for application id: " + applicationId));
+
+        AiAnalysisResponse response = new AiAnalysisResponse();
+        response.setCitizen_id(app.getCitizen() != null ? app.getCitizen().getEmail() : "");
+        response.setApplication_id(app.getApplicationId());
+        response.setFinal_status(aiRecord.getAiAnalysisStatus().name());
+        response.setOfficer_decision_required(true);
+
+        AiAnalysisResponse.FraudAnalysisOutput fraud = new AiAnalysisResponse.FraudAnalysisOutput();
+        fraud.setPrediction(aiRecord.getPrediction());
+        fraud.setFraud_probability(aiRecord.getFraudProbability());
+        fraud.setRisk_level(aiRecord.getFraudRiskLevel());
+        fraud.setVerification_requirement(aiRecord.getVerificationRequirement());
+        response.setFraud_analysis(fraud);
+
+        if (aiRecord.getShapExplanation() != null && !aiRecord.getShapExplanation().isEmpty()) {
+            try {
+                AiAnalysisResponse.ExplanationOutput explanation = objectMapper.readValue(
+                        aiRecord.getShapExplanation(), AiAnalysisResponse.ExplanationOutput.class);
+                response.setExplanation(explanation);
+            } catch (Exception e) {
+                AiAnalysisResponse.ExplanationOutput explanation = new AiAnalysisResponse.ExplanationOutput();
+                explanation.setHuman_readable_explanation(aiRecord.getShapExplanation());
+                response.setExplanation(explanation);
+            }
+        }
+
+        return response;
     }
 }

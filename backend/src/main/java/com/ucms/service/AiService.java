@@ -3,6 +3,7 @@ package com.ucms.service;
 import com.ucms.dto.AiAnalysisRequest;
 import com.ucms.dto.AiAnalysisResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.RestClientException;
@@ -10,14 +11,18 @@ import org.springframework.web.client.RestClientException;
 @Service
 public class AiService {
 
-    @Value("${app.ai.service.url}")
+    @Value("${app.ai.service.url:http://localhost:8000}")
     private String aiServiceUrl;
 
     private final RestTemplate restTemplate;
 
     public AiService() {
-        this.restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(5000);
+        this.restTemplate = new RestTemplate(factory);
     }
+
 
     public String getAiServiceUrl() {
         return aiServiceUrl;

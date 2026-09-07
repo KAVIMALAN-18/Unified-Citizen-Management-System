@@ -1,5 +1,5 @@
 {
-    "model_type": "DecisionTreeClassifier",
+    "model_type": "RandomForestClassifier",
     "description": "Baseline ML fraud classifier trained and evaluated on synthetic UCMS application data.",
     "random_state": 42,
     "total_applications": 1150,
@@ -31,9 +31,9 @@
         "income_ratio_diff",
         "land_diff"
     ],
-    "accuracy": 0.9902,
-    "precision": 0.9756,
-    "recall": 0.9524,
-    "f1_score": 0.9639,
-    "roc_auc": 0.9738
+    "accuracy": 0.987,
+    "precision": 0.975,
+    "recall": 0.9286,
+    "f1_score": 0.9512,
+    "roc_auc": 0.9987
 }

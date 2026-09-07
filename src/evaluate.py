@@ -17,25 +17,43 @@ from train import prepare_features
 from recommendationEngine import RecommendationEngine
 from citizenProfileAnalyzer import CitizenProfileAnalyzer
 
-def evaluate_fraud_ml_model(data_dir="data", models_dir="models"):
+def evaluate_fraud_ml_model(data_dir=None, models_dir=None):
     """
     Evaluates the ML baseline fraud model on synthetic test datasets.
     """
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if data_dir is None:
+        data_dir = os.path.join(base_dir, "data")
+    if models_dir is None:
+        models_dir = os.path.join(base_dir, "models")
+
     print("\n==========================================================================")
     print("           STEP 1: FRAUD MACHINE LEARNING MODEL EVALUATION                ")
     print("==========================================================================")
 
     model_path = os.path.join(models_dir, "fraud_model.joblib")
     if not os.path.exists(model_path):
-        print(f"Error: Trained model file not found at {model_path}. Run train.py first.")
-        return
+        model_path = os.path.join(models_dir, "fraud", "fraud_model.joblib")
+
+    if not os.path.exists(model_path):
+        print(f"Notice: Trained model file not found at {model_path}. Auto-training model...")
+        try:
+            from train import train_fraud_ml_model
+            train_fraud_ml_model(data_dir=data_dir, models_dir=models_dir)
+            model_path = os.path.join(models_dir, "fraud_model.joblib")
+        except Exception as e:
+            print(f"Error auto-training model: {e}")
+            return None
 
     artifact = joblib.load(model_path)
     model = artifact["model"]
     feature_names = artifact["feature_names"]
 
-    apps_df = pd.read_csv(os.path.join(data_dir, "applications.csv"))
-    citizens_df = pd.read_csv(os.path.join(data_dir, "citizens.csv"))
+    apps_csv = os.path.join(data_dir, "applications.csv")
+    citizens_csv = os.path.join(data_dir, "citizens.csv")
+
+    apps_df = pd.read_csv(apps_csv)
+    citizens_df = pd.read_csv(citizens_csv)
 
     X, y, _ = prepare_features(apps_df, citizens_df)
 
@@ -70,19 +88,26 @@ def evaluate_fraud_ml_model(data_dir="data", models_dir="models"):
         "confusion_matrix": cm
     }
 
-def evaluate_recommendation_engine(data_dir="data", n_samples=100):
+def evaluate_recommendation_engine(data_dir=None, n_samples=100):
     """
     Evaluates rule-based scheme recommendation consistency against ground-truth eligibility criteria.
     """
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if data_dir is None:
+        data_dir = os.path.join(base_dir, "data")
+
     print("\n==========================================================================")
     print("      STEP 2: DYNAMIC RECOMMENDATION ENGINE CONSISTENCY EVALUATION        ")
     print("==========================================================================")
 
-    citizens_df = pd.read_csv(os.path.join(data_dir, "citizens.csv"))
-    schemes_df = pd.read_csv(os.path.join(data_dir, "schemes.csv"))
+    citizens_path = os.path.join(data_dir, "citizens.csv")
+    schemes_path = os.path.join(data_dir, "schemes.csv")
+
+    citizens_df = pd.read_csv(citizens_path)
+    schemes_df = pd.read_csv(schemes_path)
 
     analyzer = CitizenProfileAnalyzer()
-    rec_engine = RecommendationEngine(schemes_filepath=os.path.join(data_dir, "schemes.csv"))
+    rec_engine = RecommendationEngine(schemes_filepath=schemes_path)
 
     sample_citizens = citizens_df.head(n_samples)
     total_evaluations = 0
@@ -97,17 +122,29 @@ def evaluate_recommendation_engine(data_dir="data", n_samples=100):
             # Verification of hard eligibility rule logic
             age = profile["raw_age"]
             inc = profile["raw_income"]
+            land = profile["raw_land_area"]
+            occ = str(profile.get("raw_occupation", "")).lower()
+
             min_age = s_row["minimum_age"]
             max_age = s_row["maximum_age"]
             max_inc = s_row["maximum_income"]
+            min_land = s_row.get("minimum_land_area", 0.0)
+            max_land = s_row.get("maximum_land_area", 999.0)
+            req_occ = str(s_row.get("required_occupation", "Any")).lower()
 
-            expected_eligible = (min_age <= age <= max_age) and (inc <= max_inc)
-            if s_row["requires_farmer"]:
-                expected_eligible = expected_eligible and profile["farmer_indicator"]
-            if s_row["requires_disability"]:
-                expected_eligible = expected_eligible and c_row.get("disability_status", False)
+            expected_eligible = (min_age <= age <= max_age) and (inc <= max_inc) and (min_land <= land <= max_land)
 
-            if eval_res["eligible"] == expected_eligible:
+            if req_occ != "any":
+                expected_eligible = expected_eligible and (req_occ in occ or (req_occ == "farmer" and profile.get("farmer_indicator", False)))
+
+            if s_row.get("requires_farmer", False):
+                expected_eligible = expected_eligible and profile.get("farmer_indicator", False)
+
+            if s_row.get("requires_disability", False):
+                dis_flag = bool(c_row["disability_status"]) if "disability_status" in c_row and pd.notna(c_row["disability_status"]) else bool(profile.get("disability_status", False))
+                expected_eligible = expected_eligible and dis_flag
+
+            if eval_res["eligible"] == bool(expected_eligible):
                 correct_eligibility_matches += 1
 
     rec_accuracy = (correct_eligibility_matches / total_evaluations) * 100.0
@@ -119,3 +156,4 @@ def evaluate_recommendation_engine(data_dir="data", n_samples=100):
 if __name__ == "__main__":
     evaluate_fraud_ml_model()
     evaluate_recommendation_engine()
+

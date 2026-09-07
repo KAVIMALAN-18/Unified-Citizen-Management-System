@@ -2,7 +2,7 @@
 Fraud Intelligence Engine Module
 Unified Citizen Management System (UCMS) for Village Administration
 
-Analyzes application records using a trained Decision Tree model to predict fraud probability,
+Analyzes application records using a trained Random Forest model to predict fraud probability,
 risk classification level, and verification requirements.
 """
 
@@ -10,6 +10,14 @@ import os
 import joblib
 import pandas as pd
 import numpy as np
+
+def safe_float(val, default=0.0):
+    if val is None or pd.isna(val):
+        return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
 
 class FraudIntelligenceEngine:
     """
@@ -24,7 +32,13 @@ class FraudIntelligenceEngine:
     VERIFICATION_MEDIUM = "Additional Document Verification"
     VERIFICATION_HIGH = "Enhanced Manual Verification"
 
-    def __init__(self, citizens_filepath="data/citizens.csv", models_dir="models"):
+    def __init__(self, citizens_filepath=None, models_dir=None):
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        if citizens_filepath is None:
+            citizens_filepath = os.path.join(base_dir, "data", "citizens.csv")
+        if models_dir is None:
+            models_dir = os.path.join(base_dir, "models")
+
         # Load citizen database for reference/lookup
         try:
             citizens_df = pd.read_csv(citizens_filepath)
@@ -34,32 +48,38 @@ class FraudIntelligenceEngine:
 
         # Load applications database to track historical metrics for custom applications
         try:
-            self.applications_df = pd.read_csv("data/applications.csv")
+            apps_path = os.path.join(os.path.dirname(citizens_filepath), "applications.csv")
+            self.applications_df = pd.read_csv(apps_path)
         except Exception:
             self.applications_df = pd.DataFrame()
 
         # Load pre-trained model
-        model_path = os.path.join(models_dir, "fraud_model.joblib")
-        if not os.path.exists(model_path):
-            model_path = "models/fraud_model.joblib"  # fallback
-            if not os.path.exists(model_path):
-                model_path = "models/fraud/fraud_model.joblib"
+        model_paths = [
+            os.path.join(models_dir, "fraud_model.joblib"),
+            os.path.join(models_dir, "fraud", "fraud_model.joblib"),
+            "models/fraud_model.joblib",
+            "models/fraud/fraud_model.joblib"
+        ]
+        
+        self.model = None
+        self.feature_names = [
+            "income_deviation_pct", "land_deviation_pct", "application_frequency",
+            "days_since_previous_application", "scheme_claim_count", "benefit_overlap_count",
+            "document_completeness", "citizen_data_consistency", "application_consistency_score",
+            "declared_income", "declared_land_area", "annual_income", "land_area",
+            "document_count", "family_size", "existing_scheme_count", "income_ratio_diff",
+            "land_diff"
+        ]
 
-        try:
-            artifact = joblib.load(model_path)
-            self.model = artifact["model"]
-            self.feature_names = artifact["feature_names"]
-        except Exception as e:
-            print(f"Warning: Could not load fraud ML model artifact from '{model_path}': {e}")
-            self.model = None
-            self.feature_names = [
-                "income_deviation_pct", "land_deviation_pct", "application_frequency",
-                "days_since_previous_application", "scheme_claim_count", "benefit_overlap_count",
-                "document_completeness", "citizen_data_consistency", "application_consistency_score",
-                "declared_income", "declared_land_area", "annual_income", "land_area",
-                "document_count", "family_size", "existing_scheme_count", "income_ratio_diff",
-                "land_diff"
-            ]
+        for mp in model_paths:
+            if os.path.exists(mp):
+                try:
+                    artifact = joblib.load(mp)
+                    self.model = artifact["model"]
+                    self.feature_names = artifact["feature_names"]
+                    break
+                except Exception as e:
+                    print(f"Warning: Could not load fraud ML model artifact from '{mp}': {e}")
 
     def prepare_single_app_features(self, application, citizen_profile):
         """
@@ -71,27 +91,27 @@ class FraudIntelligenceEngine:
         cid = app.get("citizen_id", profile.get("citizen_id", "UNKNOWN"))
 
         # Base attributes
-        declared_income = float(app.get("declared_income", 0))
-        declared_land_area = float(app.get("declared_land_area", 0.0))
-        document_count = float(app.get("document_count", 0))
+        declared_income = safe_float(app.get("declared_income", 0))
+        declared_land_area = safe_float(app.get("declared_land_area", 0.0))
+        document_count = safe_float(app.get("document_count", 0))
 
-        annual_income = float(profile.get("annual_income", profile.get("raw_income", 0)))
-        land_area = float(profile.get("land_area", profile.get("raw_land_area", 0.0)))
-        family_size = float(profile.get("family_size", 1))
-        existing_scheme_count = float(profile.get("existing_scheme_count", 0))
+        annual_income = safe_float(profile.get("annual_income", profile.get("raw_income", 0)))
+        land_area = safe_float(profile.get("land_area", profile.get("raw_land_area", 0.0)))
+        family_size = safe_float(profile.get("family_size", 1))
+        existing_scheme_count = safe_float(profile.get("existing_scheme_count", 0))
 
         # 1. income_deviation_pct
-        if "income_deviation_pct" in app:
-            income_deviation_pct = float(app["income_deviation_pct"])
+        if "income_deviation_pct" in app and app["income_deviation_pct"] is not None:
+            income_deviation_pct = safe_float(app["income_deviation_pct"])
         else:
-            income_deviation_pct = round(abs(declared_income - annual_income) / float(max(annual_income, 1.0)) * 100.0, 2)
+            income_deviation_pct = round(abs(declared_income - annual_income) / max(annual_income, 1.0) * 100.0, 2)
 
         # 2. land_deviation_pct
-        if "land_deviation_pct" in app:
-            land_deviation_pct = float(app["land_deviation_pct"])
+        if "land_deviation_pct" in app and app["land_deviation_pct"] is not None:
+            land_deviation_pct = safe_float(app["land_deviation_pct"])
         else:
             if land_area > 0:
-                land_deviation_pct = round(abs(declared_land_area - land_area) / float(land_area) * 100.0, 2)
+                land_deviation_pct = round(abs(declared_land_area - land_area) / land_area * 100.0, 2)
             else:
                 land_deviation_pct = round(declared_land_area * 100.0, 2) if declared_land_area > 0 else 0.0
 
@@ -104,50 +124,45 @@ class FraudIntelligenceEngine:
                 c_apps = c_apps.sort_values(by="application_date")
 
         # 3. application_frequency
-        if "application_frequency" in app:
-            application_frequency = float(app["application_frequency"])
+        if "application_frequency" in app and app["application_frequency"] is not None:
+            application_frequency = safe_float(app["application_frequency"])
         else:
-            if not c_apps.empty:
-                application_frequency = float(len(c_apps) + 1)
-            else:
-                application_frequency = 1.0
+            application_frequency = safe_float(len(c_apps) + 1 if not c_apps.empty else 1.0)
 
         # 4. days_since_previous_application
-        if "days_since_previous_application" in app:
-            days_since_previous_application = float(app["days_since_previous_application"])
+        if "days_since_previous_application" in app and app["days_since_previous_application"] is not None:
+            days_since_previous_application = safe_float(app["days_since_previous_application"])
         else:
             if not c_apps.empty:
                 app_date = pd.to_datetime(app.get("application_date", pd.Timestamp.now()))
                 last_app_date = c_apps.iloc[-1]["application_date"]
-                days_since_previous_application = float(max(0, (app_date - last_app_date).days))
+                days_since_previous_application = safe_float(max(0, (app_date - last_app_date).days))
             else:
                 days_since_previous_application = -1.0
 
         # 5. scheme_claim_count
-        if "scheme_claim_count" in app:
-            scheme_claim_count = float(app["scheme_claim_count"])
+        if "scheme_claim_count" in app and app["scheme_claim_count"] is not None:
+            scheme_claim_count = safe_float(app["scheme_claim_count"])
         else:
             if not c_apps.empty:
                 applied_schemes = set(c_apps["scheme_id"].unique())
                 applied_schemes.add(app.get("scheme_id", "SCH000"))
-                scheme_claim_count = float(len(applied_schemes))
+                scheme_claim_count = safe_float(len(applied_schemes))
             else:
                 scheme_claim_count = 1.0
 
         # 6. benefit_overlap_count
-        if "benefit_overlap_count" in app:
-            benefit_overlap_count = float(app["benefit_overlap_count"])
+        if "benefit_overlap_count" in app and app["benefit_overlap_count"] is not None:
+            benefit_overlap_count = safe_float(app["benefit_overlap_count"])
         else:
-            if not c_apps.empty:
-                benefit_overlap_count = float(len(c_apps["scheme_id"].unique()))
-            else:
-                benefit_overlap_count = 0.0
+            benefit_overlap_count = safe_float(len(c_apps["scheme_id"].unique()) if not c_apps.empty else 0.0)
 
         # 7. document_completeness
-        if "document_completeness" in app:
-            document_completeness = float(app["document_completeness"])
+        if "document_completeness" in app and app["document_completeness"] is not None:
+            document_completeness = safe_float(app["document_completeness"])
         else:
             document_completeness = round(min(1.0, document_count / 4.0), 2)
+
 
         # 8. citizen_data_consistency
         if "citizen_data_consistency" in app:
@@ -201,7 +216,7 @@ class FraudIntelligenceEngine:
 
     def analyze_application(self, application, citizen_profile=None):
         """
-        Analyzes a single application using the loaded ML Decision Tree model.
+        Analyzes a single application using the loaded ML Random Forest model.
         """
         if isinstance(application, pd.Series):
             app = application.to_dict()

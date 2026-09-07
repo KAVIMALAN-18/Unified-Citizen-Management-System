@@ -38,6 +38,12 @@ public class OfficerController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/applications/{id}/ai-analysis")
+    public ResponseEntity<AiAnalysisResponse> getAiAnalysis(@PathVariable Long id) {
+        AiAnalysisResponse response = officerService.getAiAnalysis(id);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/applications/{id}/review")
     public ResponseEntity<ApplicationDto> reviewApplication(@PathVariable Long id, @RequestBody OfficerReviewRequest reviewRequest) {
         ApplicationDto dto = officerService.reviewApplication(id, reviewRequest);
