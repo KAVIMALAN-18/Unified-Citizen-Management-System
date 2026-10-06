@@ -21,7 +21,7 @@ export const CitizenDashboard = () => {
       try {
         const [appsRes, schemesRes, certsRes, grvRes] = await Promise.allSettled([
           applicationService.getMyApplications(),
-          schemeService.getAllSchemes(),
+          schemeService.getRecommendedSchemes(),
           certificateService.getMyRequests(),
           grievanceService.getMyGrievances(),
         ]);
@@ -135,27 +135,63 @@ export const CitizenDashboard = () => {
         {/* Recommended Welfare Schemes Preview */}
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3 className="card-title" style={{ margin: 0 }}>Welfare Schemes Catalog</h3>
+            <h3 className="card-title" style={{ margin: 0 }}>Top Recommended Schemes for You</h3>
             <Link to="/citizen/schemes" className="btn btn-primary btn-sm">
-              Explore Schemes <ArrowRight size={14} />
+              Explore All <ArrowRight size={14} />
             </Link>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {schemes.slice(0, 3).map((scheme) => (
-              <div key={scheme.id} style={{ border: '1px solid var(--slate-200)', borderRadius: '8px', padding: '0.85rem' }}>
-                <div style={{ fontWeight: 700, fontSize: '0.925rem' }}>{scheme.name}</div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--slate-600)', margin: '0.25rem 0' }}>{scheme.description}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
-                  <span style={{ fontSize: '0.775rem', color: 'var(--primary-700)', fontWeight: 600 }}>
-                    Income Limit: ₹{scheme.incomeLimit ? Number(scheme.incomeLimit).toLocaleString('en-IN') : 'N/A'}
-                  </span>
-                  <Link to={`/citizen/apply/${scheme.schemeId}`} className="btn btn-secondary btn-sm">
-                    Apply Now
-                  </Link>
-                </div>
-              </div>
-            ))}
+            {[...schemes]
+              .sort((a, b) => (b.eligible !== false ? 1 : 0) - (a.eligible !== false ? 1 : 0))
+              .slice(0, 3)
+              .map((scheme) => {
+                const isEligible = scheme.eligible !== false;
+                return (
+                  <div key={scheme.id} style={{ border: '1px solid var(--slate-200)', borderRadius: '8px', padding: '0.85rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.25rem' }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.925rem' }}>{scheme.name}</div>
+                      {isEligible ? (
+                        <span className="badge badge-success" style={{ fontSize: '0.75rem' }}>
+                          {scheme.matchScore ? `${scheme.matchScore}% Match` : 'Eligible'}
+                        </span>
+                      ) : (
+                        <span className="badge badge-danger" style={{ fontSize: '0.75rem' }}>
+                          Not Eligible
+                        </span>
+                      )}
+                    </div>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--slate-600)', margin: '0.25rem 0' }}>{scheme.description}</p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.5rem' }}>
+                      <span style={{ fontSize: '0.775rem', color: 'var(--primary-700)', fontWeight: 600 }}>
+                        Income Limit: ₹{scheme.incomeLimit ? Number(scheme.incomeLimit).toLocaleString('en-IN') : 'N/A'}
+                      </span>
+                      {isEligible ? (
+                        <Link to={`/citizen/apply/${scheme.schemeId}`} className="btn btn-primary btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          Apply Now <ArrowRight size={13} />
+                        </Link>
+                      ) : (
+                        <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                          <button
+                            disabled
+                            className="btn btn-secondary btn-sm"
+                            style={{ opacity: 0.65, cursor: 'not-allowed', color: 'var(--slate-500)', fontSize: '0.75rem', padding: '0.25rem 0.55rem' }}
+                          >
+                            Ineligible
+                          </button>
+                          <Link
+                            to={`/citizen/schemes/${scheme.schemeId}`}
+                            className="btn btn-secondary btn-sm"
+                            style={{ fontSize: '0.75rem', padding: '0.25rem 0.55rem' }}
+                          >
+                            Guidelines
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

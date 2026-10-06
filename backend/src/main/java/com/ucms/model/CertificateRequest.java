@@ -38,6 +38,15 @@ public class CertificateRequest {
     @Column(name = "certificate_reference")
     private String certificateReference;
 
+    @Column(name = "digital_signature", length = 128)
+    private String digitalSignature;
+
+    @Column(name = "issued_at")
+    private LocalDateTime issuedAt;
+
+    @Column(name = "approved_by_officer")
+    private String approvedByOfficer;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -73,6 +82,15 @@ public class CertificateRequest {
 
     public String getCertificateReference() { return certificateReference; }
     public void setCertificateReference(String certificateReference) { this.certificateReference = certificateReference; }
+
+    public String getDigitalSignature() { return digitalSignature; }
+    public void setDigitalSignature(String digitalSignature) { this.digitalSignature = digitalSignature; }
+
+    public LocalDateTime getIssuedAt() { return issuedAt; }
+    public void setIssuedAt(LocalDateTime issuedAt) { this.issuedAt = issuedAt; }
+
+    public String getApprovedByOfficer() { return approvedByOfficer; }
+    public void setApprovedByOfficer(String approvedByOfficer) { this.approvedByOfficer = approvedByOfficer; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }

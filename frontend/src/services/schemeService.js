@@ -6,6 +6,11 @@ export const schemeService = {
     return response.data;
   },
 
+  getRecommendedSchemes: async () => {
+    const response = await api.get('/api/schemes/recommended');
+    return response.data;
+  },
+
   getSchemeById: async (schemeId) => {
     const response = await api.get(`/api/schemes/${schemeId}`);
     return response.data;

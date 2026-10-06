@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { applicationService } from '../../services/applicationService';
 import { StatusBadge } from '../../components/common/StatusBadge';
-import { FileText, Eye } from 'lucide-react';
+import { ECertificateModal } from '../../components/certificate/ECertificateModal';
+import { FileText, Eye, Award } from 'lucide-react';
 
 export const MyApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedApp, setSelectedApp] = useState(null);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -58,10 +61,34 @@ export const MyApplications = () => {
                     <td>{app.applicationDate}</td>
                     <td>₹{app.declaredIncome ? Number(app.declaredIncome).toLocaleString('en-IN') : '0'}</td>
                     <td><StatusBadge status={app.status} /></td>
-                    <td>
+                    <td style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                       <Link to={`/citizen/applications/${app.id}`} className="btn btn-secondary btn-sm">
-                        <Eye size={14} /> View Details
+                        <Eye size={14} /> Details
                       </Link>
+                      {app.status === 'APPROVED' && (
+                        <button
+                          className="btn btn-success btn-sm"
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 600 }}
+                          onClick={() => {
+                            setSelectedApp(app);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <Award size={14} /> e-Sanction & QR
+                        </button>
+                      )}
+                      {app.status === 'REJECTED' && (
+                        <button
+                          className="btn btn-outline btn-sm"
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 600, color: '#dc2626', borderColor: '#fca5a5' }}
+                          onClick={() => {
+                            setSelectedApp(app);
+                            setModalOpen(true);
+                          }}
+                        >
+                          <Award size={14} /> View QR (Rejected)
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -70,6 +97,14 @@ export const MyApplications = () => {
           </div>
         )}
       </div>
+
+      {/* Official e-Sanction Order Modal */}
+      <ECertificateModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        data={selectedApp}
+        type="APPLICATION"
+      />
     </div>
   );
 };

@@ -46,6 +46,18 @@ public class Application {
     @Column(name = "officer_remarks", columnDefinition = "TEXT")
     private String officerRemarks;
 
+    @Column(name = "sanction_reference")
+    private String sanctionReference;
+
+    @Column(name = "digital_signature", length = 128)
+    private String digitalSignature;
+
+    @Column(name = "approved_at")
+    private LocalDateTime approvedAt;
+
+    @Column(name = "approved_by_officer")
+    private String approvedByOfficer;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "ai_analysis_status", nullable = false)
     private AiAnalysisStatus aiAnalysisStatus = AiAnalysisStatus.NOT_ANALYZED;
@@ -91,6 +103,18 @@ public class Application {
 
     public String getOfficerRemarks() { return officerRemarks; }
     public void setOfficerRemarks(String officerRemarks) { this.officerRemarks = officerRemarks; }
+
+    public String getSanctionReference() { return sanctionReference; }
+    public void setSanctionReference(String sanctionReference) { this.sanctionReference = sanctionReference; }
+
+    public String getDigitalSignature() { return digitalSignature; }
+    public void setDigitalSignature(String digitalSignature) { this.digitalSignature = digitalSignature; }
+
+    public LocalDateTime getApprovedAt() { return approvedAt; }
+    public void setApprovedAt(LocalDateTime approvedAt) { this.approvedAt = approvedAt; }
+
+    public String getApprovedByOfficer() { return approvedByOfficer; }
+    public void setApprovedByOfficer(String approvedByOfficer) { this.approvedByOfficer = approvedByOfficer; }
 
     public AiAnalysisStatus getAiAnalysisStatus() { return aiAnalysisStatus; }
     public void setAiAnalysisStatus(AiAnalysisStatus aiAnalysisStatus) { this.aiAnalysisStatus = aiAnalysisStatus; }

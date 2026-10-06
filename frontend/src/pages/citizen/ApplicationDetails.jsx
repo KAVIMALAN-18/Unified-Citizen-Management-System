@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { applicationService } from '../../services/applicationService';
 import { StatusBadge } from '../../components/common/StatusBadge';
-import { FileText, ArrowLeft, Paperclip, MessageSquare } from 'lucide-react';
+import { ECertificateModal } from '../../components/certificate/ECertificateModal';
+import { FileText, ArrowLeft, Paperclip, MessageSquare, Award } from 'lucide-react';
 
 export const ApplicationDetails = () => {
   const { id } = useParams();
   const [app, setApp] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchApp = async () => {
@@ -41,7 +43,27 @@ export const ApplicationDetails = () => {
               {app.schemeName || app.schemeId}
             </h2>
           </div>
-          <StatusBadge status={app.status} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {app.status === 'APPROVED' && (
+              <button
+                className="btn btn-success btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+                onClick={() => setModalOpen(true)}
+              >
+                <Award size={16} /> Download e-Sanction & QR
+              </button>
+            )}
+            {app.status === 'REJECTED' && (
+              <button
+                className="btn btn-danger btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+                onClick={() => setModalOpen(true)}
+              >
+                <Award size={16} /> View Revoked Record & QR
+              </button>
+            )}
+            <StatusBadge status={app.status} />
+          </div>
         </div>
 
         <div style={{ background: 'var(--slate-50)', padding: '1.25rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', fontSize: '0.9rem' }}>
@@ -83,6 +105,14 @@ export const ApplicationDetails = () => {
           </div>
         )}
       </div>
+
+      {/* Official e-Sanction Order Modal */}
+      <ECertificateModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        data={app}
+        type="APPLICATION"
+      />
     </div>
   );
 };

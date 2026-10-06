@@ -8,7 +8,9 @@ import com.ucms.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,33 @@ public class ApplicationService {
 
         Scheme scheme = schemeRepository.findBySchemeId(request.getSchemeId())
                 .orElseThrow(() -> new IllegalArgumentException("Scheme not found with ID: " + request.getSchemeId()));
+
+        if (Boolean.FALSE.equals(scheme.getActive())) {
+            throw new IllegalArgumentException("This welfare scheme is currently inactive.");
+        }
+
+        int age = citizen.getDateOfBirth() != null 
+                ? Period.between(citizen.getDateOfBirth(), LocalDate.now()).getYears() 
+                : 35;
+
+        if (scheme.getAgeMin() != null && age < scheme.getAgeMin()) {
+            throw new IllegalArgumentException("Ineligible: Applicant age (" + age + " yrs) is below minimum required of " + scheme.getAgeMin() + " yrs.");
+        }
+        if (scheme.getAgeMax() != null && age > scheme.getAgeMax()) {
+            throw new IllegalArgumentException("Ineligible: Applicant age (" + age + " yrs) exceeds maximum limit of " + scheme.getAgeMax() + " yrs.");
+        }
+        if (scheme.getIncomeLimit() != null && citizen.getAnnualIncome() != null && citizen.getAnnualIncome().compareTo(scheme.getIncomeLimit()) > 0) {
+            throw new IllegalArgumentException("Ineligible: Applicant annual income exceeds scheme ceiling of INR " + scheme.getIncomeLimit());
+        }
+        if (scheme.getLandLimit() != null && citizen.getLandArea() != null && citizen.getLandArea().compareTo(scheme.getLandLimit()) > 0) {
+            throw new IllegalArgumentException("Ineligible: Land holding exceeds maximum ceiling of " + scheme.getLandLimit() + " acres.");
+        }
+        if ("SCH002".equalsIgnoreCase(scheme.getSchemeId()) && !Boolean.TRUE.equals(citizen.getFarmerStatus())) {
+            throw new IllegalArgumentException("Ineligible: Program requires registered agricultural farmer status.");
+        }
+        if ("SCH005".equalsIgnoreCase(scheme.getSchemeId()) && citizen.getGender() != null && !"FEMALE".equalsIgnoreCase(citizen.getGender().name())) {
+            throw new IllegalArgumentException("Ineligible: Program is reserved exclusively for women entrepreneurs.");
+        }
 
         Application app = new Application();
         app.setApplicationId("APP" + System.currentTimeMillis() % 1000000);
