@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Optional<Application> findByApplicationId(String applicationId);
+    Optional<Application> findBySanctionReference(String sanctionReference);
     List<Application> findByCitizenIdOrderByCreatedAtDesc(Long citizenId);
     List<Application> findAllByOrderByCreatedAtDesc();
     long countByStatus(ApplicationStatus status);

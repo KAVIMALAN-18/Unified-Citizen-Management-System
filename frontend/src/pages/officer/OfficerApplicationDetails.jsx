@@ -4,8 +4,8 @@ import { useParams, Link } from 'react-router-dom';
 import { officerService } from '../../services/officerService';
 import { StatusBadge, AiRiskBadge } from '../../components/common/StatusBadge';
 import { ShapVisualizer } from '../../components/common/ShapVisualizer';
-import { Modal } from '../../components/common/Modal';
-import { ArrowLeft, Cpu, CheckCircle, XCircle, AlertTriangle, Paperclip, MessageSquare } from 'lucide-react';
+import { ECertificateModal } from '../../components/certificate/ECertificateModal';
+import { ArrowLeft, Cpu, CheckCircle, XCircle, AlertTriangle, Paperclip, MessageSquare, Award } from 'lucide-react';
 
 export const OfficerApplicationDetails = () => {
   const { id } = useParams();
@@ -15,7 +15,8 @@ export const OfficerApplicationDetails = () => {
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
   const [reviewing, setReviewing] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasRerunAi, setHasRerunAi] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -50,18 +51,17 @@ export const OfficerApplicationDetails = () => {
 
   const handleTriggerAi = async () => {
     setAnalyzing(true);
-    setIsModalOpen(true); // Open the modal immediately to show the loading screen
     setError('');
     setSuccessMsg('');
 
     try {
       const res = await officerService.triggerAiAnalysis(id);
       setAiResult(res);
+      setHasRerunAi(true);
       setSuccessMsg('AI Evaluation & Dynamic SHAP analysis completed successfully!');
       fetchDetails();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to connect to FastAPI AI Service.');
-      setIsModalOpen(false); // Close the modal if it fails
     } finally {
       setAnalyzing(false);
     }
@@ -75,7 +75,7 @@ export const OfficerApplicationDetails = () => {
     try {
       await officerService.reviewApplication(id, { status, remarks });
       setSuccessMsg(`Application status updated to ${status}!`);
-      setIsModalOpen(false); // Close modal after decision is submitted
+      setHasRerunAi(false);
       fetchDetails();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to submit officer decision.');
@@ -108,7 +108,24 @@ export const OfficerApplicationDetails = () => {
               Applicant: <strong>{app.citizenName}</strong> ({app.citizenEmail})
             </div>
           </div>
-          <StatusBadge status={app.status} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            {(app.status === 'APPROVED' || app.status === 'REJECTED') && (
+              <button
+                className={`btn btn-sm ${app.status === 'APPROVED' ? 'btn-success' : 'btn-outline'}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontWeight: 600,
+                  ...(app.status === 'REJECTED' ? { color: '#dc2626', borderColor: '#fca5a5' } : {}),
+                }}
+                onClick={() => setModalOpen(true)}
+              >
+                <Award size={15} /> {app.status === 'APPROVED' ? 'Inspect e-Sanction & QR' : 'Inspect Revoked QR'}
+              </button>
+            )}
+            <StatusBadge status={app.status} />
+          </div>
         </div>
       </div>
 
@@ -145,17 +162,30 @@ export const OfficerApplicationDetails = () => {
         </div>
       </div>
 
+      {/* Inline Analyzing Progress State */}
+      {analyzing && (
+        <div className="card" style={{ marginBottom: '1.5rem', background: '#f8fafc', border: '1px solid var(--primary-300)', display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '1.5rem' }}>
+          <div className="spinner-loader" style={{ width: '32px', height: '32px', borderTopColor: 'var(--primary-600)' }}></div>
+          <div>
+            <div style={{ fontWeight: 700, color: 'var(--slate-800)', fontSize: '1.05rem' }}>Auditing Application Data with Machine Learning...</div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--slate-500)', marginTop: '0.2rem' }}>
+              Invoking FastAPI microservice to compute Random Forest risk probabilities and SHAP local feature attributions.
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Display AI Analysis Results Panel on main page if already evaluated */}
       {fraudAnalysis && (
         <div className="card" style={{ marginBottom: '1.5rem', borderLeft: '5px solid var(--primary-600)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h3 className="card-title" style={{ margin: 0 }}>AI Fraud & Eligibility Evaluation Results</h3>
-            <button className="btn btn-secondary btn-sm" onClick={() => setIsModalOpen(true)}>
-              <Cpu size={14} /> Open AI Audit Modal
-            </button>
+            <h3 className="card-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Cpu className="text-primary-600" /> Explainable AI Fraud & Eligibility Evaluation Results
+            </h3>
+            <span className="badge badge-info" style={{ fontWeight: 700 }}>AI Audit Verified</span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
             <div style={{ background: 'var(--slate-50)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--slate-200)' }}>
               <div style={{ fontSize: '0.8rem', color: 'var(--slate-500)' }}>Fraud Probability</div>
               <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--slate-900)' }}>
@@ -178,6 +208,18 @@ export const OfficerApplicationDetails = () => {
             </div>
           </div>
 
+          {/* Human Readable Explanation */}
+          {explanation?.human_readable_explanation && (
+            <div className="alert alert-info" style={{ marginBottom: '1.25rem' }}>
+              <div>
+                <strong style={{ fontSize: '0.95rem' }}>Explainable AI Audit Verdict:</strong>
+                <p style={{ marginTop: '0.35rem', fontSize: '0.875rem', lineHeight: '1.5' }}>
+                  {explanation.human_readable_explanation}
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Dynamic SHAP Explanation Component */}
           {explanation && <ShapVisualizer explanation={explanation} />}
         </div>
@@ -199,137 +241,151 @@ export const OfficerApplicationDetails = () => {
           </div>
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Administrative Officer Remarks / Reasons</label>
-          <textarea
-            className="form-control"
-            rows={3}
-            placeholder="Enter justification for final approval or rejection..."
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-          />
-        </div>
-
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <button
-            className="btn btn-success"
-            style={{ flex: 1 }}
-            onClick={() => handleDecision('APPROVED')}
-            disabled={reviewing}
-          >
-            <CheckCircle size={18} /> Approve Application
-          </button>
-
-          <button
-            className="btn btn-danger"
-            style={{ flex: 1 }}
-            onClick={() => handleDecision('REJECTED')}
-            disabled={reviewing}
-          >
-            <XCircle size={18} /> Reject Application
-          </button>
-        </div>
-      </div>
-
-      {/* AI Evaluation Modal Dialog */}
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Explainable AI Audit & Decision Workspace"
-      >
-        {analyzing ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '3rem 1.5rem', gap: '1.25rem' }}>
-            <div className="spinner-loader"></div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontWeight: 700, color: 'var(--slate-800)', fontSize: '1.1rem' }}>Auditing Application Data...</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--slate-500)', marginTop: '0.25rem' }}>
-                Executing Random Forest risk matrices & SHAP explanation calculations...
-              </div>
-            </div>
+        {/* Remarks Input */}
+        {(app.status !== 'REJECTED' || hasRerunAi) && (
+          <div className="form-group">
+            <label className="form-label">Administrative Officer Remarks / Reasons</label>
+            <textarea
+              className="form-control"
+              rows={3}
+              placeholder={
+                hasRerunAi
+                  ? "Enter justification for approval or rejection following AI re-audit..."
+                  : app.status === 'APPROVED'
+                  ? "Enter reason for revoking and rejecting this previously approved application..."
+                  : "Enter justification for approval or rejection..."
+              }
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+            />
           </div>
-        ) : (
-          <div>
-            {fraudAnalysis ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                {/* Risk Badges */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                  <div style={{ background: 'var(--slate-50)', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--slate-200)' }}>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--slate-500)', fontWeight: 600 }}>Risk Class Evaluation</div>
-                    <div style={{ marginTop: '0.25rem' }}>
-                      <AiRiskBadge riskLevel={fraudAnalysis.risk_level} requirement={fraudAnalysis.verification_requirement} />
-                    </div>
-                  </div>
+        )}
 
-                  <div style={{ background: 'var(--slate-50)', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--slate-200)' }}>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--slate-500)', fontWeight: 600 }}>Calculated Fraud Probability</div>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--slate-900)', marginTop: '0.25rem' }}>
-                      {(fraudAnalysis.fraud_probability * 100).toFixed(1)}%
-                    </div>
-                  </div>
-                </div>
+        {/* Decision Actions Based on Approval Lifecycle */}
+        {app.status === 'PENDING' && (
+          <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+            <button
+              className="btn btn-success"
+              style={{ flex: 1 }}
+              onClick={() => handleDecision('APPROVED')}
+              disabled={reviewing}
+            >
+              <CheckCircle size={18} /> Approve Application
+            </button>
 
-                {/* Human Readable Explanation */}
-                {explanation?.human_readable_explanation && (
-                  <div className="alert alert-info" style={{ margin: 0, padding: '1rem' }}>
-                    <div>
-                      <strong style={{ fontSize: '0.95rem' }}>Explainable AI Audit Verdict:</strong>
-                      <p style={{ marginTop: '0.35rem', fontSize: '0.875rem', lineHeight: '1.4' }}>
-                        {explanation.human_readable_explanation}
-                      </p>
-                    </div>
-                  </div>
-                )}
+            <button
+              className="btn btn-danger"
+              style={{ flex: 1 }}
+              onClick={() => handleDecision('REJECTED')}
+              disabled={reviewing}
+            >
+              <XCircle size={18} /> Reject Application
+            </button>
+          </div>
+        )}
 
-                {/* SHAP Chart */}
-                {explanation && <ShapVisualizer explanation={explanation} />}
-
-                {/* Officer Decision Section inside Modal */}
-                <div style={{ background: 'var(--slate-50)', padding: '1.25rem', borderRadius: '8px', border: '1px solid var(--slate-200)', marginTop: '0.5rem' }}>
-                  <h4 style={{ fontSize: '0.95rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '0.75rem' }}>
-                    <MessageSquare size={16} className="text-primary-600" /> Complete Officer Decision
-                  </h4>
-
-                  <div className="form-group" style={{ marginBottom: '1rem' }}>
-                    <label className="form-label" style={{ fontSize: '0.8rem', fontWeight: 600 }}>Decision Justification / Remarks</label>
-                    <textarea
-                      className="form-control"
-                      rows={2}
-                      placeholder="Input decision remarks based on AI verification..."
-                      value={remarks}
-                      onChange={(e) => setRemarks(e.target.value)}
-                      style={{ fontSize: '0.85rem' }}
-                    />
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    <button
-                      className="btn btn-success btn-sm"
-                      style={{ flex: 1 }}
-                      onClick={() => handleDecision('APPROVED')}
-                      disabled={reviewing}
-                    >
-                      <CheckCircle size={16} /> Approve
-                    </button>
-
-                    <button
-                      className="btn btn-danger btn-sm"
-                      style={{ flex: 1 }}
-                      onClick={() => handleDecision('REJECTED')}
-                      disabled={reviewing}
-                    >
-                      <XCircle size={16} /> Reject
-                    </button>
+        {app.status === 'APPROVED' && (
+          <div style={{ marginTop: '1rem' }}>
+            {!hasRerunAi ? (
+              <div className="alert alert-warning" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', margin: 0 }}>
+                <AlertTriangle size={22} color="#d97706" style={{ flexShrink: 0 }} />
+                <div style={{ fontSize: '0.875rem' }}>
+                  <strong>Application is Currently Approved.</strong>
+                  <div style={{ marginTop: '0.2rem' }}>
+                    Approval confirmed. To reconsider or reject this application, click <strong>"Re-run AI Audit"</strong> above to unlock the decision controls.
                   </div>
                 </div>
               </div>
             ) : (
-              <div style={{ textAlign: 'center', padding: '1.5rem', color: 'var(--slate-500)' }}>
-                No analysis data available. Please trigger the AI evaluation.
+              <div>
+                <div className="alert alert-info" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <CheckCircle size={20} color="#0284c7" style={{ flexShrink: 0 }} />
+                  <div style={{ fontSize: '0.875rem' }}>
+                    <strong>AI Re-Audit Completed.</strong> Decision controls unlocked. You can now re-approve or reject this application.
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button
+                    className="btn btn-success"
+                    style={{ flex: 1 }}
+                    onClick={() => handleDecision('APPROVED')}
+                    disabled={reviewing}
+                  >
+                    <CheckCircle size={18} /> Approve Application
+                  </button>
+
+                  <button
+                    className="btn btn-danger"
+                    style={{ flex: 1 }}
+                    onClick={() => handleDecision('REJECTED')}
+                    disabled={reviewing}
+                  >
+                    <XCircle size={18} /> Reject Application
+                  </button>
+                </div>
               </div>
             )}
           </div>
         )}
-      </Modal>
+
+        {app.status === 'REJECTED' && (
+          <div style={{ marginTop: '1rem' }}>
+            <div className="alert alert-danger" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', marginBottom: hasRerunAi ? '1rem' : 0 }}>
+              <XCircle size={22} style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong style={{ fontSize: '0.95rem' }}>Application Status: REJECTED</strong>
+                <div style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                  {app.officerRemarks ? `Rejection Remarks: "${app.officerRemarks}"` : 'This application has been formally rejected.'}
+                </div>
+                <div style={{ fontSize: '0.775rem', marginTop: '0.35rem', opacity: 0.9 }}>
+                  Official status is synchronized. The e-Sanction QR verification code shows as REJECTED / REVOKED.
+                  {!hasRerunAi && ' Re-run AI Audit above if you wish to re-evaluate and modify this decision.'}
+                </div>
+              </div>
+            </div>
+
+            {hasRerunAi && (
+              <div>
+                <div className="alert alert-info" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                  <CheckCircle size={20} color="#0284c7" style={{ flexShrink: 0 }} />
+                  <div style={{ fontSize: '0.875rem' }}>
+                    <strong>AI Re-Audit Completed.</strong> Decision controls unlocked. You can now approve or re-confirm rejection.
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                  <button
+                    className="btn btn-success"
+                    style={{ flex: 1 }}
+                    onClick={() => handleDecision('APPROVED')}
+                    disabled={reviewing}
+                  >
+                    <CheckCircle size={18} /> Approve Application
+                  </button>
+
+                  <button
+                    className="btn btn-danger"
+                    style={{ flex: 1 }}
+                    onClick={() => handleDecision('REJECTED')}
+                    disabled={reviewing}
+                  >
+                    <XCircle size={18} /> Reject Application
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Official e-Sanction & Verification QR Modal */}
+      <ECertificateModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        data={app}
+        type="APPLICATION"
+      />
     </div>
   );
 };

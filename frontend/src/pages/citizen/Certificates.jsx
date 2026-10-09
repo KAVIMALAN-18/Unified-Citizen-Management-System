@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { certificateService } from '../../services/certificateService';
 import { StatusBadge } from '../../components/common/StatusBadge';
 import { Modal } from '../../components/common/Modal';
-import { FileCheck, Download, Plus, CheckCircle } from 'lucide-react';
+import { ECertificateModal } from '../../components/certificate/ECertificateModal';
+import { FileCheck, Download, Plus, CheckCircle, Award } from 'lucide-react';
 
 export const Certificates = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedCert, setSelectedCert] = useState(null);
   const [certificateType, setCertificateType] = useState('INCOME');
   const [submittedInfo, setSubmittedInfo] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -102,12 +105,18 @@ export const Certificates = () => {
                     <td><StatusBadge status={req.status} /></td>
                     <td>
                       {req.status === 'APPROVED' ? (
-                        <button
-                          className="btn btn-success btn-sm"
-                          onClick={() => handleDownload(req.id, req.certificateReference)}
-                        >
-                          <Download size={14} /> Download
-                        </button>
+                        <div style={{ display: 'flex', gap: '0.4rem' }}>
+                          <button
+                            className="btn btn-success btn-sm"
+                            style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: 600 }}
+                            onClick={() => {
+                              setSelectedCert(req);
+                              setViewModalOpen(true);
+                            }}
+                          >
+                            <Award size={14} /> e-Certificate & QR
+                          </button>
+                        </div>
                       ) : (
                         <span style={{ fontSize: '0.8rem', color: 'var(--slate-500)' }}>In Review</span>
                       )}
@@ -158,6 +167,14 @@ export const Certificates = () => {
           </div>
         </form>
       </Modal>
+
+      {/* Official e-Certificate & QR Code Modal */}
+      <ECertificateModal
+        isOpen={viewModalOpen}
+        onClose={() => setViewModalOpen(false)}
+        data={selectedCert}
+        type="CERTIFICATE"
+      />
     </div>
   );
 };

@@ -56,10 +56,12 @@ public class AuthService {
         citizen.setRole(Role.CITIZEN);
 
         Citizen savedCitizen = citizenRepository.save(citizen);
+        String token = jwtService.generateToken(savedCitizen);
 
         return new AuthResponse(
                 true,
                 "Citizen registered successfully",
+                token,
                 CitizenDto.fromEntity(savedCitizen)
         );
     }

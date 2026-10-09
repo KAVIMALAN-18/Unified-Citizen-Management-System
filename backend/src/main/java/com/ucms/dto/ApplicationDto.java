@@ -21,6 +21,12 @@ public class ApplicationDto {
     private Integer documentCount;
     private ApplicationStatus status;
     private String officerRemarks;
+    private String sanctionReference;
+    private String digitalSignature;
+    private LocalDateTime approvedAt;
+    private String approvedByOfficer;
+    private String village;
+    private String address;
     private AiAnalysisStatus aiAnalysisStatus;
     private LocalDateTime createdAt;
 
@@ -34,6 +40,8 @@ public class ApplicationDto {
         if (app.getCitizen() != null) {
             dto.setCitizenId(app.getCitizen().getId());
             dto.setCitizenName(app.getCitizen().getFullName());
+            dto.setVillage(app.getCitizen().getVillage());
+            dto.setAddress(app.getCitizen().getAddress());
         }
         if (app.getScheme() != null) {
             dto.setSchemeId(app.getScheme().getSchemeId());
@@ -45,6 +53,10 @@ public class ApplicationDto {
         dto.setDocumentCount(app.getDocumentCount());
         dto.setStatus(app.getStatus());
         dto.setOfficerRemarks(app.getOfficerRemarks());
+        dto.setSanctionReference(app.getSanctionReference());
+        dto.setDigitalSignature(app.getDigitalSignature());
+        dto.setApprovedAt(app.getApprovedAt());
+        dto.setApprovedByOfficer(app.getApprovedByOfficer());
         dto.setAiAnalysisStatus(app.getAiAnalysisStatus());
         dto.setCreatedAt(app.getCreatedAt());
         return dto;
@@ -86,6 +98,24 @@ public class ApplicationDto {
 
     public String getOfficerRemarks() { return officerRemarks; }
     public void setOfficerRemarks(String officerRemarks) { this.officerRemarks = officerRemarks; }
+
+    public String getSanctionReference() { return sanctionReference; }
+    public void setSanctionReference(String sanctionReference) { this.sanctionReference = sanctionReference; }
+
+    public String getDigitalSignature() { return digitalSignature; }
+    public void setDigitalSignature(String digitalSignature) { this.digitalSignature = digitalSignature; }
+
+    public LocalDateTime getApprovedAt() { return approvedAt; }
+    public void setApprovedAt(LocalDateTime approvedAt) { this.approvedAt = approvedAt; }
+
+    public String getApprovedByOfficer() { return approvedByOfficer; }
+    public void setApprovedByOfficer(String approvedByOfficer) { this.approvedByOfficer = approvedByOfficer; }
+
+    public String getVillage() { return village; }
+    public void setVillage(String village) { this.village = village; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
     public AiAnalysisStatus getAiAnalysisStatus() { return aiAnalysisStatus; }
     public void setAiAnalysisStatus(AiAnalysisStatus aiAnalysisStatus) { this.aiAnalysisStatus = aiAnalysisStatus; }

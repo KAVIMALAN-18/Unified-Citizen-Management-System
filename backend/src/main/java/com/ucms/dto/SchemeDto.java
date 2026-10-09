@@ -59,9 +59,30 @@ public class SchemeDto {
     public BigDecimal getLandLimit() { return landLimit; }
     public void setLandLimit(BigDecimal landLimit) { this.landLimit = landLimit; }
 
+    private Boolean eligible;
+    private Integer matchScore;
+    private String matchLevel;
+    private java.util.List<String> matchReasons;
+    private java.util.List<String> missingDocuments;
+
     public String getRequiredDocuments() { return requiredDocuments; }
     public void setRequiredDocuments(String requiredDocuments) { this.requiredDocuments = requiredDocuments; }
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public Boolean getEligible() { return eligible; }
+    public void setEligible(Boolean eligible) { this.eligible = eligible; }
+
+    public Integer getMatchScore() { return matchScore; }
+    public void setMatchScore(Integer matchScore) { this.matchScore = matchScore; }
+
+    public String getMatchLevel() { return matchLevel; }
+    public void setMatchLevel(String matchLevel) { this.matchLevel = matchLevel; }
+
+    public java.util.List<String> getMatchReasons() { return matchReasons; }
+    public void setMatchReasons(java.util.List<String> matchReasons) { this.matchReasons = matchReasons; }
+
+    public java.util.List<String> getMissingDocuments() { return missingDocuments; }
+    public void setMissingDocuments(java.util.List<String> missingDocuments) { this.missingDocuments = missingDocuments; }
 }

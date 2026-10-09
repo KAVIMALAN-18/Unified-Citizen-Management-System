@@ -165,15 +165,15 @@ class FraudIntelligenceEngine:
 
 
         # 8. citizen_data_consistency
-        if "citizen_data_consistency" in app:
-            citizen_data_consistency = float(app["citizen_data_consistency"])
+        if "citizen_data_consistency" in app and app["citizen_data_consistency"] is not None:
+            citizen_data_consistency = safe_float(app["citizen_data_consistency"])
         else:
             c_cons = 100.0 - min(45.0, income_deviation_pct * 0.45) - min(45.0, land_deviation_pct * 0.45)
             citizen_data_consistency = round(max(0.0, min(100.0, c_cons)), 2)
 
         # 9. application_consistency_score
-        if "application_consistency_score" in app:
-            application_consistency_score = float(app["application_consistency_score"])
+        if "application_consistency_score" in app and app["application_consistency_score"] is not None:
+            application_consistency_score = safe_float(app["application_consistency_score"])
         else:
             a_cons = (document_completeness * 60.0)
             if 0 <= days_since_previous_application <= 3:

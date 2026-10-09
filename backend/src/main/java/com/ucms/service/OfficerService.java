@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -217,6 +218,23 @@ public class OfficerService {
             app.setOfficerRemarks(reviewRequest.getRemarks().trim());
         }
 
+        if (newStatus == ApplicationStatus.APPROVED) {
+            if (app.getSanctionReference() == null) {
+                String schemeCode = app.getScheme() != null ? app.getScheme().getSchemeId() : "SCH";
+                app.setSanctionReference("UCMS-SANCT-" + schemeCode + "-2026-" + (10000 + (System.currentTimeMillis() % 90000)));
+            }
+            if (app.getApprovedAt() == null) {
+                app.setApprovedAt(LocalDateTime.now());
+            }
+            if (app.getApprovedByOfficer() == null) {
+                app.setApprovedByOfficer("Village Administrative Officer (VAO)");
+            }
+            if (app.getDigitalSignature() == null) {
+                String payload = app.getSanctionReference() + ":" + (app.getCitizen() != null ? app.getCitizen().getEmail() : "") + ":" + app.getApprovedAt();
+                app.setDigitalSignature(generateDigitalSignature(payload));
+            }
+        }
+
         Application saved = applicationRepository.save(app);
         return ApplicationDto.fromEntity(saved);
     }
@@ -240,12 +258,40 @@ public class OfficerService {
             cr.setOfficerRemarks(reviewRequest.getRemarks().trim());
         }
 
-        if (newStatus == CertificateStatus.APPROVED && cr.getCertificateReference() == null) {
-            cr.setCertificateReference("CERT-" + cr.getCertificateType().name() + "-2026-" + (System.currentTimeMillis() % 100000));
+        if (newStatus == CertificateStatus.APPROVED) {
+            if (cr.getCertificateReference() == null) {
+                cr.setCertificateReference("UCMS-CERT-" + cr.getCertificateType().name() + "-2026-" + (10000 + (System.currentTimeMillis() % 90000)));
+            }
+            if (cr.getIssuedAt() == null) {
+                cr.setIssuedAt(LocalDateTime.now());
+            }
+            if (cr.getApprovedByOfficer() == null) {
+                cr.setApprovedByOfficer("Village Administrative Officer (VAO)");
+            }
+            if (cr.getDigitalSignature() == null) {
+                String payload = cr.getCertificateReference() + ":" + (cr.getCitizen() != null ? cr.getCitizen().getEmail() : "") + ":" + cr.getIssuedAt();
+                cr.setDigitalSignature(generateDigitalSignature(payload));
+            }
         }
 
         CertificateRequest saved = certificateRequestRepository.save(cr);
         return CertificateRequestDto.fromEntity(saved);
+    }
+
+    private String generateDigitalSignature(String payload) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest((payload + ":UCMS_GOV_TN_SECRET_KEY_2026").getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder("SHA256:");
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (Exception e) {
+            return "SHA256:" + Long.toHexString(System.currentTimeMillis()) + "e90f23a";
+        }
     }
 
     @Transactional(readOnly = true)

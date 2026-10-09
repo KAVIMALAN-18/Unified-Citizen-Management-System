@@ -23,6 +23,13 @@ public class SchemeController {
         return ResponseEntity.ok(schemes);
     }
 
+    @GetMapping("/recommended")
+    public ResponseEntity<List<SchemeDto>> getRecommendedSchemes(org.springframework.security.core.Authentication authentication) {
+        String email = authentication != null ? authentication.getName() : null;
+        List<SchemeDto> schemes = schemeService.getRecommendedSchemes(email);
+        return ResponseEntity.ok(schemes);
+    }
+
     @GetMapping("/{schemeId}")
     public ResponseEntity<SchemeDto> getSchemeById(@PathVariable String schemeId) {
         SchemeDto scheme = schemeService.getSchemeBySchemeId(schemeId);

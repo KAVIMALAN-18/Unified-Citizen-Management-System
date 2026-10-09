@@ -7,6 +7,7 @@ import { ProtectedRoute } from './components/common/ProtectedRoute';
 // Auth Pages
 import { CitizenLogin, OfficerLogin } from './pages/auth/CitizenLogin';
 import { CitizenRegister } from './pages/auth/CitizenRegister';
+import { VerifyCertificate } from './pages/public/VerifyCertificate';
 
 // Citizen Pages
 import { CitizenDashboard } from './pages/citizen/CitizenDashboard';
@@ -47,7 +48,9 @@ export default function App() {
           {/* Root Navigation Redirect */}
           <Route path="/" element={<RootRedirect />} />
 
-          {/* Auth Routes */}
+          {/* Auth & Public Routes */}
+          <Route path="/verify" element={<VerifyCertificate />} />
+          <Route path="/verify-certificate" element={<VerifyCertificate />} />
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<CitizenLogin />} />
             <Route path="/register" element={<CitizenRegister />} />

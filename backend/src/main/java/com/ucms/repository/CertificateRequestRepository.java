@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CertificateRequestRepository extends JpaRepository<CertificateRequest, Long> {
     Optional<CertificateRequest> findByRequestId(String requestId);
+    Optional<CertificateRequest> findByCertificateReference(String certificateReference);
     List<CertificateRequest> findByCitizenIdOrderByCreatedAtDesc(Long citizenId);
     List<CertificateRequest> findAllByOrderByCreatedAtDesc();
     long countByStatus(CertificateStatus status);

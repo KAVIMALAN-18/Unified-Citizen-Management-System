@@ -46,10 +46,11 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**", "/api/health", "/api/schemes/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/health", "/api/schemes/**", "/h2-console/**", "/api/public/**").permitAll()
                         .requestMatchers("/api/citizen/**").hasAnyRole("CITIZEN", "OFFICER")
                         .requestMatchers("/api/officer/**").hasRole("OFFICER")
                         .anyRequest().authenticated()

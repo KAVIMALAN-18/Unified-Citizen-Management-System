@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from api.schemas import AnalyzeRequest, AnalyzeResponse
+from api.schemas import AnalyzeRequest, AnalyzeResponse, CitizenInput
 from api.service import AIService
 
 # Load environment configuration
@@ -89,6 +89,31 @@ def analyze(request: AnalyzeRequest):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"An unexpected error occurred during AI evaluation: {str(e)}"
+        )
+
+@app.post("/api/v1/ai/recommend", status_code=status.HTTP_200_OK)
+def recommend(request: CitizenInput):
+    """
+    Evaluates citizen socio-economic parameters and returns AI-ranked scheme recommendations.
+    """
+    if service is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="UCMS AI Service is not fully initialized."
+        )
+    try:
+        citizen_dict = request.dict()
+        enriched = service.analyzer.analyze_profile(citizen_dict)
+        recs = service.rec_engine.recommend_schemes(enriched, top_n=10)
+        return {
+            "citizen_id": citizen_dict.get("citizen_id"),
+            "profile": enriched,
+            "recommendations": recs
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Recommendation evaluation error: {str(e)}"
         )
 
 if __name__ == "__main__":
